@@ -1,0 +1,48 @@
+<div class="container-fluid page">
+  <div class="d-flex page__box p-3 mt-2"></div>
+  <div class="page__content shadow p-3 position-relative">
+    <div class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header card-header-primary">
+                <h4 class="card-title">Order History</h4>
+                <p class="card-category"></p>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead class="text-primary">
+                      <th>No</th>
+                      <th>Mã đơn hàng</th>
+                      <th>Danh sách sản phẩm</th>
+                      <th>Ngày đặt hàng</th>
+                      <th>Tổng tiền</th>
+                      <th>Trạng thái</th>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of order, let i = index " >
+                        <td *ngIf = "item.user === data.employee?.id">{{i+1}}</td>
+                        <td *ngIf = "item.user === data.employee?.id">{{item.id}}</td>
+                        <td *ngIf = "item.user === data.employee?.id"><div *ngFor="let pro of item.products">{{pro.name}}, SL: {{pro.quantity}}</div></td>
+                        <td *ngIf = "item.user === data.employee?.id">{{item.timeOrder | date: 'short'}}</td>
+                        <td *ngIf = "item.user === data.employee?.id" class="text-primary">{{item.total}}</td>
+                        <td *ngIf = "item.user === data.employee?.id">{{item.state}}</td>
+                        <td>
+                          <!-- <app-edit-oder [id]="item.id" (updateFinished)="finishAndAlert($event)">
+
+                          </app-edit-oder> -->
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
