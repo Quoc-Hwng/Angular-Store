@@ -13,9 +13,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class OrderHistoryComponent implements OnInit {
 
-  url='http://localhost:3000/api/v1/cart';
+  url='http://localhost:3000/api/v1/cart?sort=-timeOrder';
   order!: Order[];
-
+  orders!: Order[];
+  totalLength: number;
+ page:number = 1;
+ limit: any = 5;
   constructor(private rest: RestApiService,
     public data: DataService,
     private modalService: NgbModal,
@@ -23,10 +26,10 @@ export class OrderHistoryComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.rest.get(this.url).then((data:any)=>{
-      this.order =( data.carts as Order[]);
-      console.log(data);
-      console.log(this.order);
+    this.rest.getSort(this.url).then((data:any)=>{
+      this.orders =( data.carts as Order[]);
+      this.order = this.orders.filter(item => item.user === this.data.employee?.id)
+      this.totalLength = this.order?.length;
       this.order.forEach(order =>{
         order.products.forEach(item =>{
           this.productService.getProById(item.product).subscribe((data:any)=>{

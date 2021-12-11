@@ -24,11 +24,7 @@ export class CartComponent implements OnInit {
     .subscribe(res=>{
       this.items = res;
       this.grandTotal = this.cartService.getTotalPrice();
-      const total = JSON.stringify(this.grandTotal);
-      localStorage.setItem('total',total);
-      console.log(this.items);
     })
-    this.totalPrice = parseInt(localStorage.getItem('total')!);
   }
   addQuantity(item: CartItem){
     if(item.quantity === null)

@@ -11,11 +11,11 @@
                   <div class="nav-item dropdown dropright">
                       <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Brand<i class="fa fa-angle-right float-right mt-1"></i></a>
                       <div class="dropdown-menu position-absolute rounded-0 border-0 m-0">
-                          <a href="" class="dropdown-item">Nike</a>
-                          <a href="" class="dropdown-item">Adidas</a>
+                          <option *ngFor="let item of brands" (click)="navigateToFoo(item.nameBrand)" class="dropdown-item">{{item.nameBrand}}</option>
+                          <!-- <a href="" class="dropdown-item">Adidas</a>
                           <a href="" class="dropdown-item">Puma</a>
                           <a href="" class="dropdown-item">Converse</a>
-                          <a href="" class="dropdown-item">Other</a>
+                          <a href="" class="dropdown-item">Other</a> -->
                       </div>
                   </div>
                   <a (click)="navigateToFoo('new')" class="nav-item nav-link" >New</a>
@@ -39,8 +39,8 @@
                   <div class="navbar-nav mr-auto py-0">
                       <a routerLink="/" class="nav-item nav-link">Home</a>
                       <a routerLink="/homes" class="nav-item nav-link active">Shop</a>
-                      <a routerLink="" class="nav-item nav-link">News</a>
-                      <a href="contact.html" class="nav-item nav-link">About</a>
+                      <!-- <a routerLink="" class="nav-item nav-link">News</a>
+                      <a href="contact.html" class="nav-item nav-link">About</a> -->
                   </div>
                   <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
                       <a routerLink="/cart" class="btn px-0 ml-3">

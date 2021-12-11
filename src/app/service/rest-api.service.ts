@@ -19,10 +19,16 @@ get(link:string){
     return this.http.get(link +'/', {headers: headers}).toPromise();
   return this.http.get(link +'/').toPromise();
 }
-getOder(link:string, page:number,size: number, status: string){
+getSort(link:string){
   let headers = this.getHeaders();
   if(headers instanceof HttpHeaders)
-    return this.http.get(link+'/'+status +'?page='+ page+'&&size='+size, {headers: headers}).toPromise();
+    return this.http.get(link, {headers: headers}).toPromise();
+  return this.http.get(link).toPromise();
+}
+gets(link:string, page:number,size: number){
+  let headers = this.getHeaders();
+  if(headers instanceof HttpHeaders)
+    return this.http.get(link +'?page='+ page+'&&size='+size, {headers: headers}).toPromise();
  return this.router.navigate(['/login'])
 }
 searchOder(link: string,key:string,status: string){
@@ -31,7 +37,7 @@ searchOder(link: string,key:string,status: string){
     return this.http.get(link +'/'+status+key, {headers: headers}).toPromise();
   return this.http.get(link +'/'+key ).toPromise();
 }
-filter(link: string,option?:{status?: string, gender?: string, selling?:string,color?: string,price1?: number,price2?:number,brand?: string,size?: number}){
+filter(link: string,option?:{status?: string, gender?: string, selling?:string,color?: string,price1?: number,price2?:number,brand?: string,size?: number,sort?: string}){
   let headers= this.getHeaders();
   let param = new HttpParams();
   if(option){
@@ -59,6 +65,9 @@ filter(link: string,option?:{status?: string, gender?: string, selling?:string,c
     if(option.size){
       param =param.set("size",option.size);
     }
+    if(option.sort){
+      param =param.set("sort",option.sort);
+    }
   }
   console.log(option);
   if(headers instanceof HttpHeaders)
@@ -83,6 +92,19 @@ search(link: string,key:string){
   if(headers instanceof HttpHeaders)
     return this.http.get(link +'/'+key, {headers: headers}).toPromise();
   return this.http.get(link +'/'+key ).toPromise();
+}
+paginateSearch(link: string,key:string,option?:{page?: number,limit?: number}){
+  let headers= this.getHeaders();
+  let param = new HttpParams();
+  if(option){
+    if(option.page)
+    {param = param.set("page",option.page);}
+    if(option.limit)
+    {param = param.set("limit",option.limit)}
+  }
+  if(headers instanceof HttpHeaders)
+    return this.http.get(link+'/'+key, {headers: headers,params:param}).toPromise();
+  return this.http.get(link+'/'+key,{params: param} ).toPromise();
 }
 getOne(link: string,id:string){
   let headers= this.getHeaders();

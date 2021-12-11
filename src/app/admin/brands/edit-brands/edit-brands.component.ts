@@ -4,6 +4,8 @@ import { Brand } from 'src/app/models/brand';
 import { RestApiService } from 'src/app/service/rest-api.service';
 import { DataService } from 'src/app/service/data.service';
 import { FormBuilder, Validators } from '@angular/forms';
+import { getDownloadURL, ref, Storage } from '@angular/fire/storage';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Component({
   selector: 'app-edit-brands',
@@ -24,7 +26,8 @@ export class EditBrandsComponent implements OnInit {
   constructor(private modelService: NgbModal,
     private rest:RestApiService,
     private data: DataService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private storage: AngularFireStorage) {
       this.brand= new Brand;
      }
 
@@ -36,7 +39,7 @@ export class EditBrandsComponent implements OnInit {
       ])],
     "codeBrand":["",[Validators.required,Validators.minLength(2),]],
       "description":["",[Validators.required,Validators.minLength(20)]],
-      "imgs":["",[Validators.required]],
+      // "imgs":["",[Validators.required]],
       "state":["",[Validators.required]],
      })
      get f(){
@@ -72,6 +75,20 @@ export class EditBrandsComponent implements OnInit {
         this.data.error(error['message'])
       });
 
+  }
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    const filePath = file.name;
+    const ref = this.storage.ref(filePath);
+    const task = ref.put(file).then(data =>{
+      console.log(data);
+      getDownloadURL(data.ref).then(data =>{
+        console.log(data);
+        this.brand.imgs = data;
+      })
+    }).catch(error =>{
+      console.log(error);
+    });
   }
 
 }

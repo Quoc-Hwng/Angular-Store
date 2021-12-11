@@ -5,6 +5,8 @@ import { Product } from 'src/app/models/product';
 import { DataService } from 'src/app/service/data.service';
 import { Brand } from 'src/app/models/brand';
 import { FormBuilder, Validators } from '@angular/forms';
+import { getDownloadURL, ref, Storage } from '@angular/fire/storage';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Component({
   selector: 'app-edit-product',
@@ -29,7 +31,8 @@ export class EditProductComponent implements OnInit {
   constructor(private modelService: NgbModal,
     private rest:RestApiService,
     private data: DataService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private storage: AngularFireStorage) {
       this.product= new Product;
      }
      infoproduct = this.fb.group({
@@ -42,11 +45,11 @@ export class EditProductComponent implements OnInit {
       "gender":["",[Validators.required]],
       "colour":["",[Validators.required]],
       "status":["",[Validators.required]],
-      "selling":["",[Validators.required]],
+      //"selling":["",[Validators.required]],
       "priceSale":["",[Validators.required]],
-      "productImg1":["", Validators.pattern("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?")],
-      "productImg2":["", Validators.pattern("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?")],
-      "productImg3":["", Validators.pattern("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?")],
+      // "productImg1":["", Validators.pattern("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?")],
+      // "productImg2":["", Validators.pattern("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?")],
+      // "productImg3":["", Validators.pattern("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?")],
       "description":["",[Validators.required]]
      })
 
@@ -75,6 +78,11 @@ export class EditProductComponent implements OnInit {
     this.modelService.open(content, {ariaDescribedBy: 'modal-basic-title'});
   }
   update(){
+    if(this.product.price !== this.product.priceSale){
+      this.product.selling = 'sale';
+    }else{
+      this.product.selling = 'new';
+    }
     this.doing=true;
     this.rest.put(this.url1,this.editId,this.product)
       .then(data =>{
@@ -87,6 +95,51 @@ export class EditProductComponent implements OnInit {
         this.data.error(error['lỗi'])
       });
 
+  }
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    const filePath = file.name;
+    const ref = this.storage.ref(filePath);
+    const task = ref.put(file).then(data =>{
+      console.log(data);
+      getDownloadURL(data.ref).then(data =>{
+        console.log(data);
+        this.product.productImg1 = data;
+
+      })
+    }).catch(error =>{
+      console.log(error);
+    });
+  }
+  onFileSelected2(event: any) {
+    const file = event.target.files[0];
+    const filePath = file.name;
+    const ref = this.storage.ref(filePath);
+    const task = ref.put(file).then(data =>{
+      console.log(data);
+      getDownloadURL(data.ref).then(data =>{
+        console.log(data);
+        this.product.productImg2 = data;
+
+      })
+    }).catch(error =>{
+      console.log(error);
+    });
+  }
+  onFileSelected3(event: any) {
+    const file = event.target.files[0];
+    const filePath = file.name;
+    const ref = this.storage.ref(filePath);
+    const task = ref.put(file).then(data =>{
+      console.log(data);
+      getDownloadURL(data.ref).then(data =>{
+        console.log(data);
+        this.product.productImg3 = data;
+
+      })
+    }).catch(error =>{
+      console.log(error);
+    });
   }
 
 }

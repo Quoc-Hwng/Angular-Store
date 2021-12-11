@@ -21,7 +21,7 @@ export class ProductComponent implements OnInit {
   confirmMessage='';
   key='';
   size=5;
-  sizes=5;
+  limit=5;
   page=1;
   pages=1;
 
@@ -48,23 +48,17 @@ export class ProductComponent implements OnInit {
     private _router: Router,
     private route: ActivatedRoute) {
      }
-
-    //  navigateToPrice(){
-    //   // element.checked = true;
-    //    // if(this.isColorChecked){
-    //    //   pri = '';}
-    //    this._router.navigate([], {
-    //     relativeTo: this.route,
-    //     queryParams: {
-    //       page : this.rangeValues[0],
-    //       limit: this.rangeValues[1],
-
-    //     },
-    //     queryParamsHandling: 'merge',
-    //     skipLocationChange: false
-    //   });
-     //  this.isColorChecked = !this.isColorChecked;
-    // }
+     navigatePage(page: number,limit: number){
+      this._router.navigate([], {
+       relativeTo: this.route,
+       queryParams: {
+         page: page,
+         limit: limit,
+       },
+       queryParamsHandling: 'merge',
+       skipLocationChange: false
+     });
+    }
   ngOnInit() {
     this.btnDisabled=true;
    /*  this.rest.get(this.url).then(data=>{
@@ -74,27 +68,37 @@ export class ProductComponent implements OnInit {
     .catch(error=>{
       this.data.error(error['message']);
     }) */
-    if(this.key==''){
-      this.rest.get(this.url).then((data:any)=>{
+    if(this.key===''){
+      this.route.queryParams
+      .subscribe(params => {
+        this.page = params.page;
+        this.limit = params.limit;
+      this.rest.paginate(this.url1,{page:this.page,limit:this.limit}).then((data:any)=>{
         this.product =( data.data.data as Product[]);
+     //   this.product = (data as {product: Product[]}).product;
         console.log(data);
         this.btnDisabled=false;
       })
       .catch(error=>{
         this.data.error(error['message']);
-      })
+      })})
     }else{
-      this.rest.search(this.url,this.key).then((data:any)=>{
-        this.product =data.data.data as Product[];
+      this.route.queryParams
+      .subscribe(params => {
+        this.page = params.page;
+        this.limit = params.limit;
+      this.rest.paginateSearch(this.url1,this.key,{page:this.page,limit:this.limit}).then((data:any)=>{
+      //  this.product =data.data.data as Product[];
+       this.product = (data as {product: Product[]}).product;
         this.btnDisabled=false;
       })
       .catch(error=>{
         this.data.error(error['message']);
-      })
+      })})
     }
   }
   Search(){
-    if(this.key==''){
+    if(this.key===''){
       this.ngOnInit();
     }else{
       this.product = this.product.filter(res=>{
@@ -107,15 +111,15 @@ export class ProductComponent implements OnInit {
       if(pages>0){
         this.page = pages;
         this.pages=pages
-        this.ngOnInit()
+   //     this.ngOnInit()
       }
   }
-  Loadsize(sizes:number){
-    console.log(sizes)
-    if(sizes>4){
-      this.size=sizes;
-      this.sizes=sizes;
-      this.ngOnInit();
+  Loadsize(limit:number){
+    console.log(limit)
+    if(limit>4){
+      this.size=limit;
+      this.limit=limit;
+ //     this.ngOnInit();
     }
   }
   finishAndAlert( message: string){

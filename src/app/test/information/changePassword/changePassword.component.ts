@@ -27,6 +27,7 @@ export class ChangePasswordComponent implements OnInit {
     this.updatePasswordForm = new FormGroup({
       'passwordCurrent': new FormControl(null, [Validators.required]),
       'password': new FormControl(null, [Validators.required]),
+      'cnPassword': new FormControl(null, [Validators.required]),
     });
     // this.passwordCurrent = new FormControl('',[Validators.required]);
     // this.password = new FormControl('',[Validators.required]);
@@ -34,13 +35,8 @@ export class ChangePasswordComponent implements OnInit {
   }
   changePassword(data: any) { // change any to what this post request will return
     console.log(data);
-  // const submitData = {
-  //   token:  localStorage.getItem('tokens'),
-  //   ['passwordCurrent']: data.passwordCurrent,
-  //   ['password']: data.password,
-  // };
-  // return this.rest.post(this.url, submitData);
-  if (data) {
+    if(this.updatePasswordForm.controls.password.value === this.updatePasswordForm.controls.cnPassword.value){
+    if (data) {
     console.log(this.updatePasswordForm.value)
     this.rest.patch(this.url,this.updatePasswordForm.value).then(data => {
         this.updatePasswordForm.reset();
@@ -49,6 +45,7 @@ export class ChangePasswordComponent implements OnInit {
           this.successMessage = '';
           this.router.navigate(['/login']);
           localStorage.removeItem('tokens');
+          localStorage.removeItem('user');
         }, 3000);
       },
       err => {
@@ -59,6 +56,9 @@ export class ChangePasswordComponent implements OnInit {
         }
       }
     );
+  }}
+  else{
+    this.errorMessage = 'Mật khẩu không giống';
   }
 }
 

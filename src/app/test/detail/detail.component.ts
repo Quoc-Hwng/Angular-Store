@@ -5,6 +5,7 @@ import { RestApiService } from 'src/app/service/rest-api.service';
 import { CartService } from 'src/app/service/cart.service';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/service/product.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-detail',
@@ -22,21 +23,15 @@ export class DetailComponent implements OnInit {
   quantity: number;
   url='http://localhost:3000/api/v1/user/product'
 
-  addtocart(item: Product, quantity: number){
-    if(quantity === null){
-      quantity = 1;
-    }
-    this.cartService.addfromDetail(item,quantity);
-    window.alert('Your product has been added to the cart!');
-  }
-
   public totalItems: number = 0;
   constructor(
     private rest:RestApiService,
     private data: DataService,
     private cartService: CartService,
     private route: ActivatedRoute,
-    private productService: ProductService) {
+    private productService: ProductService,
+    private toastr: ToastrService
+    ) {
       this.id = route.snapshot.params['id'];
       console.log(this.id);
     }
@@ -46,8 +41,14 @@ export class DetailComponent implements OnInit {
         this.ngOnInit();
     }
     }
+    addtocart(item: Product, quantity: number){
+      if(quantity === null){
+        quantity = 1;
+      }
+      this.cartService.addfromDetail(item,quantity);
+     this.toastr.success('Success', 'Your product has been added to the cart!');
+    }
     Pro: any = [];
-
   ngOnInit(){
     this.productService.getProById(this.id).subscribe((data:any) =>{
       this.Prod = data.product as Product;

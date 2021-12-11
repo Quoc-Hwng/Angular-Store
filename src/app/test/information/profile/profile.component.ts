@@ -13,5 +13,8 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  finishAndAlert( message: any){
+    this.data.success(message);
+    this.ngOnInit();
+  }
 }

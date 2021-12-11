@@ -8,6 +8,7 @@ import { DataService } from 'src/app/service/data.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Order } from '../../models/order';
 import { Router } from '@angular/router';
+import { ProductService } from 'src/app/service/product.service';
 
 
 @Component({
@@ -19,8 +20,7 @@ export class EditOderComponent implements OnInit {
 
   doing=false;
   oder: Order;
-  url1='http://localhost:3000/api/v1/cart'
-  url2=''
+  url1='http://localhost:3000/api/v1/cart';
   @Input("id")
   editId!: string;
 
@@ -31,7 +31,8 @@ export class EditOderComponent implements OnInit {
     private rest:RestApiService,
     private data: DataService,
     private fb: FormBuilder,
-    private router: Router,) {
+    private router: Router,
+    private productService: ProductService) {
       this.oder= new Order;
 
      }
@@ -42,6 +43,12 @@ export class EditOderComponent implements OnInit {
       .then((data:any) => {
         this.doing=false;
         this.oder =data.cart as Order;
+        this.oder.products.forEach(item =>{
+          this.productService.getProById(item.product).subscribe((data:any)=>{
+            item.name = data.product.productName;
+            item.size = data.product.size;
+          })
+        })
         console.log(data);
       }).catch(error =>{
         this.doing =false;
@@ -53,11 +60,12 @@ export class EditOderComponent implements OnInit {
   }
   update(){
     this.doing=true;
-    this.rest.put(this.url1 +'/edit',this.editId,this.oder.state)
+    this.rest.put(this.url1 +'/edit',this.editId,this.oder)
       .then(data =>{
         this.doing=false;
         this.modelService.dismissAll();
         this.ngOnInit()
+        console.log(data);
         this.router.navigate(['admin/home-admin'])
       }).catch(error =>{
         this.doing =false;

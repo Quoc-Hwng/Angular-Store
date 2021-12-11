@@ -46,6 +46,13 @@ import { ProfileComponent } from './test/information/profile/profile.component';
 import { OrderHistoryComponent } from './test/information/order-history/order-history.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/forgot-password/reset-password/reset-password.component';
+import { ToastrModule } from 'ngx-toastr';
+import { OrderTrackingComponent } from './components/order-tracking/order-tracking.component';
+import { UpdateInforComponent } from './test/information/profile/update-infor/update-infor.component';
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from '../environments/environment';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+
 
 @NgModule({
   declarations: [
@@ -70,18 +77,17 @@ import { ResetPasswordComponent } from './components/forgot-password/reset-passw
     ChangePasswordComponent,
     OrderHistoryComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
-
+    ResetPasswordComponent,
+    OrderTrackingComponent,
+    UpdateInforComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
     LayoutModule,
     NgbModule,
     CarouselModule,
     ButtonModule,
-    ToastModule,
     FormsModule,
     NgbModule,
     SliderModule,
@@ -96,6 +102,11 @@ import { ResetPasswordComponent } from './components/forgot-password/reset-passw
     MatIconModule,
     MatDividerModule,
     MatListModule,
+    BrowserAnimationsModule,
+    AngularFireStorageModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    ToastrModule.forRoot({
+    }),
   ],
   providers: [RestApiService, DataService],
   bootstrap: [AppComponent]

@@ -69,16 +69,14 @@
             <div class="col-md-12">
               <div class="form-group">
                 <label class="bmd-label-floating">Hình Ảnh</label>
-                <input
-                  type="text" name="imgs" id="imgs"
-                  formControlName="imgs"
-                  [(ngModel)]="brand.imgs"
-                  class="form-control"
-                />
-                <small id="nameBrandHelp" class="form-text text-muted err"  *ngIf="!infoBrand.get('imgs')?.valid && infoBrand.get('imgs')?.touched " >
-                  <i class="fa fa-times-circle" style="color:firebrick;"></i>
-                   vui lòng chọn ảnh</small>
-                   <i class="fa fa-check-circle" style="color:green;" *ngIf="f.imgs.valid"></i>
+                <div class="col-md-12">
+                  <input type="file" id="file" #userPhoto (change)="onFileSelected($event)" name="image" autocomplete="off"/>
+                  <div class="form-group" *ngIf="brand.imgs">
+                    <img style="height: 300px; width: 450px;"
+                     [src]="brand.imgs"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
             <div class="col-md-12">

@@ -36,6 +36,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RestApiService } from 'src/app/service/rest-api.service';
 import { DataService } from 'src/app/service/data.service';
 import { EditOderComponent } from './home-admin/edit-oder/edit-oder.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+
 
 @NgModule({
   declarations: [
@@ -72,7 +74,8 @@ import { EditOderComponent } from './home-admin/edit-oder/edit-oder.component';
     HttpClientModule,
     NgbModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule,
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   providers: [RestApiService, DataService]

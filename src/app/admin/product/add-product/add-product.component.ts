@@ -6,6 +6,12 @@ import { DataService } from 'src/app/service/data.service';
 import { Brand } from 'src/app/models/brand';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Product } from 'src/app/models/product';
+import { Observable } from 'rxjs';
+import { getDownloadURL, ref, Storage } from '@angular/fire/storage';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+
+
+
 
 @Component({
   selector: 'app-add-product',
@@ -15,6 +21,7 @@ import { Product } from 'src/app/models/product';
 export class AddProductComponent implements OnInit {
   saving=false;
   product: Product;
+  img1: string;
   url1='http://localhost:3000/api/v1/admin/product/add'
 
   brands!: Brand[];
@@ -24,7 +31,8 @@ export class AddProductComponent implements OnInit {
   constructor(private modelService: NgbModal,
     private rest:RestApiService,
     private data: DataService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private storage: AngularFireStorage) {
       this.product= new Product;
      }
      infoproduct = this.fb.group({
@@ -37,11 +45,11 @@ export class AddProductComponent implements OnInit {
       "gender":["",[Validators.required]],
       "colour":["",[Validators.required]],
       "status":["",[Validators.required]],
-      "selling":["",[Validators.required]],
+     // "selling":["",[Validators.required]],
       "priceSale":["",[Validators.required]],
-      "productImg1":["", Validators.pattern("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?")],
-      "productImg2":["", Validators.pattern("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?")],
-      "productImg3":["", Validators.pattern("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?")],
+      // "productImg1":["", Validators.pattern("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?")],
+      // "productImg2":["", Validators.pattern("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?")],
+      // "productImg3":["", Validators.pattern("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?")],
       "description":["",[Validators.required]]
      })
 
@@ -60,7 +68,11 @@ export class AddProductComponent implements OnInit {
   }
   save(){
     this.saving=true;
-
+    if(this.product.price !== this.product.priceSale){
+      this.product.selling = 'sale';
+    }else{
+      this.product.selling = 'new';
+    }
     this.rest.post(this.url1,this.product)
       .then(data =>{
         this.saving=false;
@@ -71,6 +83,51 @@ export class AddProductComponent implements OnInit {
         this.data.error('Mã sản phẩm đã tồn tại')
       });
 
+  }
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    const filePath = file.name;
+    const ref = this.storage.ref(filePath);
+    const task = ref.put(file).then(data =>{
+      console.log(data);
+      getDownloadURL(data.ref).then(data =>{
+        console.log(data);
+        this.product.productImg1 = data;
+
+      })
+    }).catch(error =>{
+      console.log(error);
+    });
+  }
+  onFileSelected2(event: any) {
+    const file = event.target.files[0];
+    const filePath = file.name;
+    const ref = this.storage.ref(filePath);
+    const task = ref.put(file).then(data =>{
+      console.log(data);
+      getDownloadURL(data.ref).then(data =>{
+        console.log(data);
+        this.product.productImg2 = data;
+
+      })
+    }).catch(error =>{
+      console.log(error);
+    });
+  }
+  onFileSelected3(event: any) {
+    const file = event.target.files[0];
+    const filePath = file.name;
+    const ref = this.storage.ref(filePath);
+    const task = ref.put(file).then(data =>{
+      console.log(data);
+      getDownloadURL(data.ref).then(data =>{
+        console.log(data);
+        this.product.productImg3 = data;
+
+      })
+    }).catch(error =>{
+      console.log(error);
+    });
   }
 
 }

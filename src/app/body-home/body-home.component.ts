@@ -3,6 +3,7 @@ import { DataService } from '../service/data.service';
 import { ProductService } from '../service/product.service';
 import { RestApiService } from '../service/rest-api.service';
 import {Product} from './../models/product';
+import { Brand } from 'src/app/models/brand';
 
 @Component({
   selector: 'app-body-home',
@@ -14,8 +15,10 @@ export class BodyHomeComponent implements OnInit {
   product!: Product[];
   products!: Product[];
   btnDisabled= false;
+  brand: Brand[];
 
   url='http://localhost:3000/api/v1/user/product';
+  url1='http://localhost:3000/api/v1/admin/brand';
   constructor(private rest:RestApiService,
     private data: DataService) { }
 
@@ -28,6 +31,11 @@ export class BodyHomeComponent implements OnInit {
     })
     this.rest.filter(this.url,{status:'new'}).then((data:any)=>{
       this.products =data.data.data as Product[];
+      this.btnDisabled=false;
+    })
+    this.rest.get(this.url1).then((data:any)=>{
+      this.brand =data.brands as Brand[];
+      console.log(data);
       this.btnDisabled=false;
     })
   }

@@ -38,7 +38,8 @@ export class LoginComponent implements OnInit {
        var token = value.user;
         this.successMessage = "Success";
         localStorage.setItem('tokens',value.token);
-        localStorage.setItem('user',data.data.user);
+        const jsonData = JSON.stringify(data.data.user)
+        localStorage.setItem('user',jsonData);
         var item = localStorage.getItem('tokens');
         await this.dataSer.getProfile();
         if(data.data.user.role === 'admin')

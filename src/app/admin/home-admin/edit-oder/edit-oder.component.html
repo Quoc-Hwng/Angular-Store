@@ -16,13 +16,8 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <label class="bmd-label-floating">Họ Tên</label>
-              <input
-                type="text" name="displaytName" id="displayName"
-                [(ngModel)]="oder.displayName"
-
-                class="form-control"
-              />
+              <label class="bmd-label-floating">Họ Tên : </label>
+              <label class="bmd-label-floating">{{oder.displayName}}</label>
             </div>
           </div>
           <!-- <div class="col-md-6">
@@ -39,32 +34,22 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <label class="bmd-label-floating">E-mail</label>
-              <input
-                type="text" name="email" id="email"
-                [(ngModel)]="oder.email"
-                class="form-control"
-              />
+              <label class="bmd-label-floating">E-mail : </label>
+              <label class="bmd-label-floating">{{oder.email}}</label>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="bmd-label-floating">Phone</label>
-              <input
-                type="text" name="phone" id="phone"
-                [(ngModel)]="oder.phone"
-
-                class="form-control"
-              />
+              <label class="bmd-label-floating">Phone : (+84) </label>
+              <label class="bmd-label-floating">{{oder.phone}}</label>
             </div>
           </div>
           </div>
           <div class="row">
             <div class="col-md-4">
               <div class="form-group">
-                <label class="bmd-label-floating">Address</label>
-                <input type="text" name="address" id="address" [(ngModel)]="oder.address"
-                   class="form-control" />
+                <label class="bmd-label-floating">Address : </label>
+                <label class="bmd-label-floating">{{oder.address}}</label>
               </div>
               </div>
               <!-- <div class="col-md-4">
@@ -85,24 +70,14 @@
           <div class="row">
           <div class="col-md-12">
             <div class="form-group">
-              <label class="bmd-label-floating">Ngày đặt hàng</label>
-              <input
-                type="text" name="dateOder" id="dateOder"
-
-
-                class="form-control"
-              />
+              <label class="bmd-label-floating">Ngày đặt hàng : </label>
+              <label class="bmd-label-floating">{{oder.timeOrder | date : 'short'}}</label>
             </div>
           </div>
           <div class="col-md-12">
             <div class="form-group">
-              <label class="bmd-label-floating">Danh sách sản phẩm</label>
-              <input
-                type="text" name="idCart" id="idCart"
-                [(ngModel)]="oder.products"
-
-                class="form-control"
-              />
+              <label class="bmd-label-floating">Danh sách sản phẩm : </label>
+              <div *ngFor="let pro of oder.products">{{pro.name}},Size : {{pro.size}}, SL: {{pro.quantity}}</div>
             </div>
           </div>
         </div>
@@ -113,13 +88,29 @@
               name="status" id="status"
               [(ngModel)]="oder.state"
 
-              class="custom-select mb-3"
+              class="custom-select mb-3" *ngIf="oder.state === 'unconfirmed'"
             >
-              <option value="unconfirmed" selected>Chưa xác nhận</option>
-              <option value="confimed">Xác nhận và giao hàng</option>
-              <option value="Ok">Đã nhận hàng</option>
-              <option value="No">Huy đơn hàng</option>
+              <option value="unconfirmed" selected>{{oder.state}}</option>
+              <option value="confirmed">comfirmed</option>
+              <!-- <option value="Ok">Success</option> -->
+              <option value="No">Failure</option>
             </select>
+            <select
+              name="status" id="status"
+              [(ngModel)]="oder.state"
+
+              class="custom-select mb-3" *ngIf="oder.state === 'confirmed'"
+            >
+              <option value="confirmed" selected>{{oder.state}}</option>
+              <!-- <option value="Ok">Success</option> -->
+              <option value="No">Failure</option>
+            </select>
+            <label
+            name="status" id="status"
+            [(ngModel)]="oder.state"
+
+            class="custom-select mb-3" *ngIf="oder.state === 'No'"
+          >{{oder.state}}</label>
           </div>
 
         </div>

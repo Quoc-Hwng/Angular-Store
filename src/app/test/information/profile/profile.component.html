@@ -16,7 +16,10 @@
                     <h5>Email</h5>
                     <div>{{data.employee?.email}}</div>
                   </div>
-                  <div>
+                  <div *ngIf = "data.employee?.id !== null">
+                    <app-update-infor [id]="data.employee!.id" (updateFinished)="finishAndAlert($event)">
+
+                    </app-update-infor>
                   </div>
                 </div>
               </div>

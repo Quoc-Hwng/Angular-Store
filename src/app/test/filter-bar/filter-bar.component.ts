@@ -22,8 +22,12 @@ export class FilterBarComponent implements OnInit {
   price1: number;
   price2: number;
   color: string;
+  size: number;
+  brand: string;
+  sort: string;
   isColorChecked = false;
-  rangeValues: number[] = [100000,100000000];
+  rangeValues: number[] = [100000,40000000];
+  message ='';
 
   url='http://localhost:3000/api/v1/user/product';
 
@@ -33,26 +37,8 @@ export class FilterBarComponent implements OnInit {
     private data: DataService,
     private route: ActivatedRoute,
     private _router: Router){
-    //   this.route.queryParams
-    //   .subscribe(params => {
-    //     console.log(params); // { orderby: "price" }
-    //     this.status = params.status;
-    //     this.gender = params.gender;
-    //     this.selling = params.selling;
-    //     this.color = params.color;
-    //     console.log(this.status);
-    //     this.rest.search(this.url,{status:this.status,gender:this.gender,color:this.color,selling:this.selling}).then((data:any)=>{
-    //       this.products =data.data.data as Product[];
-    //       this.btnDisabled=false;
-    //       console.log(data);
-    //     }) // price
-    //   }
-    // );
     }
     navigateToPrice(){
-     // element.checked = true;
-      // if(this.isColorChecked){
-      //   pri = '';}
       this._router.navigate([], {
        relativeTo: this.route,
        queryParams: {
@@ -63,16 +49,11 @@ export class FilterBarComponent implements OnInit {
        queryParamsHandling: 'merge',
        skipLocationChange: false
      });
-    //  this.isColorChecked = !this.isColorChecked;
     }
     navigateToFoo(color:string){
-      const checkboxRadio =document.getElementsByName('radio-checkbox');
-      checkboxRadio.forEach((item:any)=>{
-        item.checked = false;
-      })
      // element.checked = true;
-      if(this.isColorChecked){
-        color = '';}
+      // if(this.isColorChecked){
+      //   color = '';}
       this._router.navigate([], {
        relativeTo: this.route,
        queryParams: {
@@ -84,9 +65,30 @@ export class FilterBarComponent implements OnInit {
        queryParamsHandling: 'merge',
        skipLocationChange: false
      });
-     this.isColorChecked = !this.isColorChecked;
+   //  this.isColorChecked = !this.isColorChecked;
     }
+    navigateToSize(size: string){
+      this._router.navigate([], {
+       relativeTo: this.route,
+       queryParams: {
+         size: size,
 
+       },
+       queryParamsHandling: 'merge',
+       skipLocationChange: false
+     });
+    }
+    navigateToSort(sort: string){
+      this._router.navigate([], {
+       relativeTo: this.route,
+       queryParams: {
+         sort: sort,
+
+       },
+       queryParamsHandling: 'merge',
+       skipLocationChange: false
+     });
+    }
   ngOnInit(){
     this.route.queryParams
     .subscribe(params => {
@@ -97,13 +99,20 @@ export class FilterBarComponent implements OnInit {
       this.color = params.color;
       this.price1 = params.price1;
       this.price2 = params.price2;
+      this.size = params.size;
+      this.brand = params.brand;
+      this.sort = params.sort;
       console.log(this.status);
       this.rest.filter(this.url,{status:this.status,gender:this.gender,
                                   color:this.color,selling:this.selling,
-                                  price1:this.price1,price2:this.price2}).then((data:any)=>{
+                                  price1:this.price1,price2:this.price2,
+                                  size: this.size,brand: this.brand, sort: this.sort}).then((data:any)=>{
         this.products =data.data.data as Product[];
         this.totalLength = data.data.data.length;
-        console.log(this.totalLength);
+        if(this.totalLength === 0)
+        {
+          this.message = "Không tìm thấy sản phẩm nào!"
+        }
       }) // price
     }
   );

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CartService } from 'src/app/service/cart.service';
 import { DataService } from 'src/app/service/data.service';
 
@@ -10,7 +11,7 @@ import { DataService } from 'src/app/service/data.service';
 export class TopbarComponent implements OnInit {
 
   public searchTerm : string = '';
-  constructor(private cartService: CartService, public data: DataService) {
+  constructor(private cartService: CartService, public data: DataService,private router: Router) {
     this.data.getProfile();
    }
   ngOnInit() {
@@ -23,6 +24,8 @@ export class TopbarComponent implements OnInit {
   logout(){
     this.data.employee = null;
     localStorage.removeItem('tokens');
+    localStorage.removeItem('user');
+    this.router.navigate(['/login']);
   }
 
 }

@@ -1,3 +1,4 @@
+import { OrderTrackingComponent } from './components/order-tracking/order-tracking.component';
 import { CheckoutComponent } from './test/checkout/checkout.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -47,6 +48,7 @@ const routes: Routes = [
     { path: 'product', component: ProductComponent },
     { path: 'news', component: NewsComponent },
   ]},
+  { path: 'tracking', component: OrderTrackingComponent},
   { path: '**', component: PageNotFoundComponent },
 
 ];

@@ -34,6 +34,13 @@
       <app-product-display [product]="product"></app-product-display>
   </ng-template>
 </p-carousel>
+<div class="row" styles = " margin: auto;">
+  <div class="product-sale col">
+  <div *ngFor="let item of brand" class="product-ngsale mb-2">
+    <img [src]="item.imgs" height="200px" width="200px">
+  </div>
+  </div>
+  </div>
 </div>
 
 <app-footer></app-footer>

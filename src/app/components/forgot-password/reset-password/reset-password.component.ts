@@ -26,10 +26,11 @@ export class ResetPasswordComponent implements OnInit {
   ngOnInit() {
     this.resetPasswordForm = new FormGroup({
       'password': new FormControl(null, [Validators.required]),
+      'cnpassword': new FormControl(null, [Validators.required]),
     });
   }
   changePassword(data: any) { // change any to what this post request will return
-    console.log(data);
+    if(this.resetPasswordForm.controls.password.value === this.resetPasswordForm.controls.cnpassword.value){
   if (data) {
     console.log(this.resetPasswordForm.value)
     this.rest.patchToken(this.url,this.token,this.resetPasswordForm.value).then(data => {
@@ -49,6 +50,8 @@ export class ResetPasswordComponent implements OnInit {
         }
       }
     );
+  }}else{
+    this.errorMessage = 'Mật khẩu không khớp';
   }
 }
 

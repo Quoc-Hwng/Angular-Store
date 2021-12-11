@@ -1,9 +1,12 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-6 login-section-wrapper">
-      <div class="brand-wrapper">
-        <img src="assets/images/logo.svg" alt="logo" class="logo" />
-      </div>
+      <div class="col-lg-4">
+        <a routerLink="/" class="text-decoration-none">
+            <span class="h1 text-uppercase text-primary bg-dark px-2">Giay</span>
+            <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Shop</span>
+        </a>
+     </div>
       <div class="login-wrapper my-auto">
         <h1 class="login-title">Log in</h1>
         <div id="errorMsg" *ngIf="errorMessage">

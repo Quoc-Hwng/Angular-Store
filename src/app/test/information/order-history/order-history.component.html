@@ -11,7 +11,7 @@
                 <p class="card-category"></p>
               </div>
               <div class="card-body">
-                <div class="table-responsive">
+                <div class="table-responsive" *ngIf = "data.employee?.id !== null">
                   <table class="table">
                     <thead class="text-primary">
                       <th>No</th>
@@ -22,13 +22,13 @@
                       <th>Trạng thái</th>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let item of order, let i = index " >
-                        <td *ngIf = "item.user === data.employee?.id">{{i+1}}</td>
-                        <td *ngIf = "item.user === data.employee?.id">{{item.id}}</td>
-                        <td *ngIf = "item.user === data.employee?.id"><div *ngFor="let pro of item.products">{{pro.name}}, SL: {{pro.quantity}}</div></td>
-                        <td *ngIf = "item.user === data.employee?.id">{{item.timeOrder | date: 'short'}}</td>
-                        <td *ngIf = "item.user === data.employee?.id" class="text-primary">{{item.total}}</td>
-                        <td *ngIf = "item.user === data.employee?.id">{{item.state}}</td>
+                      <tr *ngFor="let item of order | paginate: { itemsPerPage: limit, currentPage: page, totalItems: totalLength }, let i = index " >
+                        <td>{{i+1}}</td>
+                        <td>{{item.id}}</td>
+                        <td><div *ngFor="let pro of item.products">{{pro.name}}, SL: {{pro.quantity}}</div></td>
+                        <td>{{item.timeOrder | date: 'short'}}</td>
+                        <td class="text-primary">{{item.total}}</td>
+                        <td>{{item.state}}</td>
                         <td>
                           <!-- <app-edit-oder [id]="item.id" (updateFinished)="finishAndAlert($event)">
 
@@ -37,6 +37,16 @@
                       </tr>
                     </tbody>
                   </table>
+                  <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                    <pagination-controls class="text-center" (pageChange)="page = $event"></pagination-controls>
+                  <select class="page-link" [(ngModel)]="limit">
+                    <option value=5>5</option>
+                    <option value=10>10</option>
+                    <option value=15>15</option>
+                  </select>
+                  </ul>
+                </nav>
                 </div>
               </div>
             </div>

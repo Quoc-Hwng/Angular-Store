@@ -2,7 +2,7 @@ export class Employee {
   id!:string
   displayName!: string;
   email!:string;
-  phone!: string;
+  phone!: number;
   image!:string;
   role!:string;
   password!:string;

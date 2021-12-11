@@ -1,111 +1,3 @@
-<!-- <div class="container-fluid page">
-  <div class="d-flex page__box p-3 mt-2">Home</div>
-  <div class="page__content shadow p-3 position-relative">
-    <div class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header card-header-primary">
-                <h4 class="card-title">Đơn hàng chờ xác nhận</h4>
-                <p class="card-category">Here is a subtitle for this table</p>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead class="text-primary">
-                      <th>No</th>
-                      <th>Mã đơn hàng</th>
-                      <th>Tên Hàng</th>
-                      <th>Số lượng</th>
-                      <th>Thành tiền</th>
-                      <th></th>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Dakota Rice</td>
-                        <td>Niger</td>
-                        <td>Oud-Turnhout</td>
-                        <td class="text-primary">$36,738</td>
-                        <td>Chi tiết</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="card card-plain">
-              <div class="card-header card-header-primary">
-                <h4 class="card-title mt-0">Đơn Hàng đang xác nhận</h4>
-                <p class="card-category">Here is a subtitle for this table</p>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table table-hover">
-                    <thead class="">
-                      <th>No</th>
-                      <th>Mã đơn hàng</th>
-                      <th>Tên Hàng</th>
-                      <th>Số lượng</th>
-                      <th>Thành tiền</th>
-                      <th></th>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Dakota Rice</td>
-                        <td>Niger</td>
-                        <td>Oud-Turnhout</td>
-                        <td class="text-primary">$36,738</td>
-                        <td>Chi tiết</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="card card-plain">
-              <div class="card-header card-header-primary">
-                <h4 class="card-title mt-0">Đơn Hàng đã hủy</h4>
-                <p class="card-category">Here is a subtitle for this table</p>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table table-hover">
-                    <thead class="">
-                      <th>No</th>
-                      <th>Mã đơn hàng</th>
-                      <th>Tên Hàng</th>
-                      <th>Số lượng</th>
-                      <th>Thành tiền</th>
-                      <th></th>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Dakota Rice</td>
-                        <td>Niger</td>
-                        <td>Oud-Turnhout</td>
-                        <td class="text-primary">$36,738</td>
-                        <td>Chi tiết</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
 <div class="container-fluid page">
   <div class="d-flex page__box p-3 mt-2">Home</div>
   <div class="page__content shadow p-3 position-relative">
@@ -131,13 +23,13 @@
                       <th></th>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let item of order, let i = index ">
+                      <tr *ngFor="let item of order | paginate: { itemsPerPage: limit, currentPage: page, totalItems: totalLength }, let i = index ">
                         <td>{{i+1}}</td>
                         <td>{{item.id}}</td>
                         <td><div *ngFor="let pro of item.products">{{pro.name}}, SL: {{pro.quantity}}</div></td>
                         <td>{{item.displayName}}</td>
                         <td>{{item.timeOrder | date: 'short'}}</td>
-                        <td class="text-primary">{{item.total}}</td>
+                        <td class="text-primary">{{item.total | currency : ' VND'}}</td>
                         <td>
                           <app-edit-oder [id]="item.id" (updateFinished)="finishAndAlert($event)">
 
@@ -146,20 +38,16 @@
                       </tr>
                     </tbody>
                   </table>
+                  <ul class="pagination">
+                    <pagination-controls class="text-center" (pageChange)="page = $event"></pagination-controls>
+                  <select class="page-link" [(ngModel)]="limit">
+                    <option value=5>5</option>
+                    <option value=10>10</option>
+                    <option value=15>15</option>
+                  </select>
+                </ul>
                 </div>
                 <nav aria-label="Page navigation example">
-                  <ul class="pagination">
-                    <li class="page-item" (click)="Loadpage(pages-1)"><a class="page-link">Previous</a></li>
-                    <input class="page-link" style="width: 50px;" type="number" name="pages" [(ngModel)]="pages"
-                      (ngModelChange)="Loadpage(pages)" />
-                    <li class="page-item" (click)="Loadpage(pages+1)"><a class="page-link">Next</a></li>
-                    <label class="page-link">Size</label>
-                    <select class="page-link" [(ngModel)]="sizes" (click)="Loadsize(sizes)">
-                      <option value=5>5</option>
-                      <option value=10>10</option>
-                      <option value=15>15</option>
-                    </select>
-                  </ul>
                 </nav>
               </div>
             </div>
@@ -176,18 +64,20 @@
                     <thead class="">
                       <th>No</th>
                       <th>Mã đơn hàng</th>
-                      <th>Tên Hàng</th>
-                      <th>Số lượng</th>
+                      <th>Danh sách sản phẩm</th>
+                      <th>Tên khách hàng</th>
+                      <th>Ngày đặt hàng</th>
                       <th>Thành tiền</th>
                       <th></th>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let item of order1, let i = index ">
+                      <tr *ngFor="let item of order2 | paginate: { itemsPerPage: limit2, currentPage: page2, totalItems: totalLength2 }, let i = index ">
                         <td>{{i+1}}</td>
                         <td>{{item.id}}</td>
-                        <td>{{item.products}}</td>
+                        <td><div *ngFor="let pro of item.products">{{pro.name}}, SL: {{pro.quantity}}</div></td>
                         <td>{{item.displayName}}</td>
-                        <td class="text-primary">{{item.total}}</td>
+                        <td>{{item.timeOrder | date: 'short'}}</td>
+                        <td class="text-primary">{{item.total | currency : ' VND'}}</td>
                         <td>
                           <app-edit-oder [id]="item.id" (updateFinished)="finishAndAlert($event)">
                           </app-edit-oder>
@@ -198,17 +88,13 @@
                 </div>
                 <nav aria-label="Page navigation example">
                   <ul class="pagination">
-                    <li class="page-item" (click)="Loadpage(pages-1)"><a class="page-link">Previous</a></li>
-                    <input class="page-link" style="width: 50px;" type="number" name="pages" [(ngModel)]="pages"
-                      (ngModelChange)="Loadpage(pages)" />
-                    <li class="page-item" (click)="Loadpage(pages+1)"><a class="page-link">Next</a></li>
-                    <label class="page-link">Size</label>
-                    <select class="page-link" [(ngModel)]="sizes" (click)="Loadsize(sizes)">
-                      <option value=5>5</option>
-                      <option value=10>10</option>
-                      <option value=15>15</option>
-                    </select>
-                  </ul>
+                    <pagination-controls class="text-center" (pageChange)="page2 = $event"></pagination-controls>
+                  <select class="page-link" [(ngModel)]="limit2">
+                    <option value=5>5</option>
+                    <option value=10>10</option>
+                    <option value=15>15</option>
+                  </select>
+                </ul>
                 </nav>
               </div>
             </div>
@@ -225,18 +111,20 @@
                     <thead class="">
                       <th>No</th>
                       <th>Mã đơn hàng</th>
-                      <th>Tên Hàng</th>
-                      <th>Số lượng</th>
+                      <th>Danh sách sản phẩm</th>
+                      <th>Tên khách hàng</th>
+                      <th>Ngày đặt hàng</th>
                       <th>Thành tiền</th>
                       <th></th>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let item of order2, let i = index ">
+                      <tr *ngFor="let item of order3 | paginate: { itemsPerPage: limit3, currentPage: page3, totalItems: totalLength3 }, let i = index ">
                         <td>{{i+1}}</td>
                         <td>{{item.id}}</td>
-                        <td>{{item.products}}</td>
+                        <td><div *ngFor="let pro of item.products">{{pro.name}}, SL: {{pro.quantity}}</div></td>
                         <td>{{item.displayName}}</td>
-                        <td class="text-primary">$36,738</td>
+                        <td>{{item.timeOrder | date: 'short'}}</td>
+                        <td class="text-primary">{{item.total | currency : ' VND'}}</td>
                         <td>
                           <app-edit-oder [id]="item.id" (updateFinished)="finishAndAlert($event)">
                           </app-edit-oder>
@@ -247,17 +135,13 @@
                 </div>
                 <nav aria-label="Page navigation example">
                   <ul class="pagination">
-                    <li class="page-item" (click)="Loadpage(pages-1)"><a class="page-link">Previous</a></li>
-                    <input class="page-link" style="width: 50px;" type="number" name="pages" [(ngModel)]="pages"
-                      (ngModelChange)="Loadpage(pages)" />
-                    <li class="page-item" (click)="Loadpage(pages+1)"><a class="page-link">Next</a></li>
-                    <label class="page-link">Size</label>
-                    <select class="page-link" [(ngModel)]="sizes" (click)="Loadsize(sizes)">
-                      <option value=5>5</option>
-                      <option value=10>10</option>
-                      <option value=15>15</option>
-                    </select>
-                  </ul>
+                    <pagination-controls class="text-center" (pageChange)="page3 = $event"></pagination-controls>
+                  <select class="page-link" [(ngModel)]="limit3">
+                    <option value=5>5</option>
+                    <option value=10>10</option>
+                    <option value=15>15</option>
+                  </select>
+                </ul>
                 </nav>
               </div>
             </div>

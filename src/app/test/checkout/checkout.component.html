@@ -18,122 +18,145 @@
   <div class="row px-xl-5">
       <div class="col-lg-8">
           <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Billing Address</span></h5>
-          <form #checkoutForm="ngForm" [formGroup]="infocheckout">
-            <div class="bg-light p-30 mb-5">
-              <div *ngIf="checkout" class="m-auto">
-                <h1 class="text-center display-3 mt-5">
-                  <i class="fas fa-spinner fa spin"></i> </h1>
-              </div>
+            <div *ngIf="dataUser !== null">
+              <div class="bg-light p-30 mb-5">
+                <div *ngIf="checkout" class="m-auto">
+                  <h1 class="text-center display-3 mt-5">
+                    <i class="fas fa-spinner fa spin"></i> </h1>
+                </div>
                 <div class="row">
-                    <div class="col-md-6 form-group">
-                        <label>Name</label>
-                        <input class="form-control" type="text" name="displayName" id="displayName" formControlName="displayName" [(ngModel)]="order.displayName" placeholder="Hung">
-                        <small id="nameBrandHelp" class="form-text text-muted err" *ngIf="!infocheckout.get('displayName')?.valid && infocheckout.get('firstName')?.touched">
-                          <i class = "fa fa-times-circle" style="color: firebrick;"></i>
-                        Input FirstName Please</small>
-                        <i class = "fa fa-check-circle" style="color:green;" *ngIf="infocheckout.controls.displayName.valid"></i>
-                    </div>
-                    <!-- <div class="col-md-6 form-group">
-                        <label>Last Name</label>
-                        <input class="form-control" type="text" name="lastName" id="lastName" formControlName="lastName" [(ngModel)]="order.lastName" placeholder="Hung">
-                        <small id="nameBrandHelp" class="form-text text-muted err" *ngIf="!infocheckout.get('lastName')?.valid && infocheckout.get('lastName')?.touched">
-                          <i class = "fa fa-times-circle" style="color: firebrick;"></i>
-                        Input LastName Please</small>
-                        <i class = "fa fa-check-circle" style="color:green;" *ngIf="infocheckout.controls.lastName.valid"></i>
-                    </div> -->
-                    <div class="col-md-6 form-group">
-                        <label>E-mail</label>
-                        <input class="form-control" type="text" name="email" id="email" formControlName="email" [(ngModel)]="order.email" placeholder="example@email.com">
-                        <small id="nameBrandHelp" class="form-text text-muted err" *ngIf="!infocheckout.get('email')?.valid && infocheckout.get('email')?.touched">
-                          <i class = "fa fa-times-circle" style="color: firebrick;"></i>
-                        Input Email Please</small>
-                        <i class = "fa fa-check-circle" style="color:green;" *ngIf="infocheckout.controls.email.valid"></i>
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label>Mobile No</label>
-                        <input class="form-control" type="text" name="phone" id="phone" formControlName="phone" [(ngModel)]="order.phone" placeholder="0123 456 789">
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label>Address</label>
-                        <input class="form-control" type="text" name="address" id="address" formControlName="address" [(ngModel)]="order.address" placeholder="123 Street">
-                    </div>
-                    <!-- <div class="col-md-6 form-group">
-                        <label>Province</label>
-                        <input class="form-control" type="text"name="province" id="province" formControlName="province" [(ngModel)]="order.country" placeholder="Thanh Pho Ho Chi Minh"> -->
-                        <!-- <select class="custom-select">
-                            <option selected>United States</option>
-                            <option>Afghanistan</option>
-                            <option>Albania</option>
-                            <option>Algeria</option>
-                        </select> -->
-                    <!-- </div> -->
-                    <!-- <div class="col-md-6 form-group">
-                        <label>District</label>
-                        <input class="form-control" type="text" placeholder="Quan Thu Duc">
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label>Town</label>
-                        <input class="form-control" type="text" placeholder="Linh Chieu">
-                    </div> -->
-                    <div class="col-md-12 form-group">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="newaccount">
-                            <label class="custom-control-label" for="newaccount">Create an account</label>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="shipto">
-                            <label class="custom-control-label" for="shipto"  data-toggle="collapse" data-target="#shipping-address">Ship to different address</label>
-                        </div>
-                    </div>
+                  <div class="col-md-6">
+                    <label>Name</label>{{dataUser?.displayName}}</div>
+                  <div class="col-md-6">
+                    <label>Phone</label>{{dataUser?.phone}}</div>
+                  <div class="col-md-6">
+                    <label>Email</label>{{dataUser?.email}}</div>
+                  <div class="col-md-6">
+                    <label>Address</label>{{dataUser?.address}}</div>
                 </div>
-                </div>
-          </form>
 
-          <div class="collapse mb-5" id="shipping-address">
-              <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Shipping Address</span></h5>
-              <div class="bg-light p-30">
+            </div>
+          </div>
+          <div *ngIf="dataUser === null">
+            <form #checkoutForm="ngForm" [formGroup]="infocheckout">
+              <div class="bg-light p-30 mb-5">
+                <div *ngIf="checkout" class="m-auto">
+                  <h1 class="text-center display-3 mt-5">
+                    <i class="fas fa-spinner fa spin"></i> </h1>
+                </div>
                   <div class="row">
                       <div class="col-md-6 form-group">
-                          <label>First Name</label>
-                          <input class="form-control" type="text" placeholder="John">
-                      </div>
-                      <div class="col-md-6 form-group">
-                          <label>Last Name</label>
-                          <input class="form-control" type="text" placeholder="Doe">
+                          <label>Name</label>
+                          <input class="form-control" type="text" name="displayName" id="displayName" formControlName="displayName" [(ngModel)]="order.displayName" placeholder="Hung">
+                          <small id="displayNameHelp" class="form-text text-muted err" *ngIf="!infocheckout.get('displayName')?.valid && infocheckout.get('firstName')?.touched">
+                            <i class = "fa fa-times-circle" style="color: firebrick;"></i>
+                          Input FirstName Please</small>
+                          <i class = "fa fa-check-circle" style="color:green;" *ngIf="infocheckout.controls.displayName.valid"></i>
                       </div>
                       <div class="col-md-6 form-group">
                           <label>E-mail</label>
-                          <input class="form-control" type="text" placeholder="example@email.com">
+                          <input class="form-control" type="text" name="email" id="email" formControlName="email" [(ngModel)]="order.email" placeholder="example@email.com">
+                          <small id="emailHelp" class="form-text text-muted err" *ngIf="!infocheckout.get('email')?.valid && infocheckout.get('email')?.touched">
+                            <i class = "fa fa-times-circle" style="color: firebrick;"></i>
+                          Input Email Please</small>
+                          <i class = "fa fa-check-circle" style="color:green;" *ngIf="infocheckout.controls.email.valid"></i>
                       </div>
                       <div class="col-md-6 form-group">
                           <label>Mobile No</label>
-                          <input class="form-control" type="text" placeholder="+123 456 789">
+                          <input class="form-control" type="text" name="phone" id="phone" formControlName="phone" [(ngModel)]="order.phone" placeholder="0123 456 789">
+                          <small id="phonelHelp" class="form-text text-muted err" *ngIf="!infocheckout.get('phone')?.valid && infocheckout.get('phone')?.touched">
+                            <i class = "fa fa-times-circle" style="color: firebrick;"></i>
+                          Input Phone Please</small>
+                          <i class = "fa fa-check-circle" style="color:green;" *ngIf="infocheckout.controls.phone.valid"></i>
                       </div>
                       <div class="col-md-6 form-group">
                           <label>Address</label>
-                          <input class="form-control" type="text" placeholder="123 Street">
+                          <input class="form-control" type="text" name="address" id="address" formControlName="address" [(ngModel)]="order.address" placeholder="123 Street">
+                          <small id="addressHelp" class="form-text text-muted err" *ngIf="!infocheckout.get('address')?.valid && infocheckout.get('address')?.touched">
+                            <i class = "fa fa-times-circle" style="color: firebrick;"></i>
+                          Input Address Please</small>
+                          <i class = "fa fa-check-circle" style="color:green;" *ngIf="infocheckout.controls.address.valid"></i>
                       </div>
-                      <div class="col-md-6 form-group">
+                      <!-- <div class="col-md-6 form-group">
                           <label>Province</label>
-                          <select class="custom-select">
+                          <input class="form-control" type="text"name="province" id="province" formControlName="province" [(ngModel)]="order.country" placeholder="Thanh Pho Ho Chi Minh"> -->
+                          <!-- <select class="custom-select">
                               <option selected>United States</option>
                               <option>Afghanistan</option>
                               <option>Albania</option>
                               <option>Algeria</option>
-                          </select>
-                      </div>
-                      <div class="col-md-6 form-group">
+                          </select> -->
+                      <!-- </div> -->
+                      <!-- <div class="col-md-6 form-group">
                           <label>District</label>
-                          <input class="form-control" type="text" placeholder="New York">
+                          <input class="form-control" type="text" placeholder="Quan Thu Duc">
                       </div>
                       <div class="col-md-6 form-group">
                           <label>Town</label>
-                          <input class="form-control" type="text" placeholder="New York">
+                          <input class="form-control" type="text" placeholder="Linh Chieu">
+                      </div> -->
+                      <div class="col-md-12 form-group">
+                          <div class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input" id="newaccount">
+                              <label class="custom-control-label" for="newaccount">Create an account</label>
+                          </div>
                       </div>
+                      <!-- <div class="col-md-12" *ngIf="dataUser !== null">
+                          <div class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input" id="shipto">
+                              <label class="custom-control-label" for="shipto"  data-toggle="collapse" data-target="#shipping-address">Ship to different address</label>
+                          </div>
+                      </div> -->
+                  </div>
+                  </div>
+            </form>
+          </div>
+          <div class="col-md-12" *ngIf="dataUser !== null">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="shipto">
+                <label class="custom-control-label" for="shipto"  data-toggle="collapse" data-target="#shipping-address">Ship to different address</label>
+            </div>
+        </div>
+          <div class="collapse mb-5" id="shipping-address" *ngIf="dataUser !== null">
+              <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Shipping Address</span></h5>
+              <form #checkoutForm="ngForm" [formGroup]="infocheckout">
+              <div class="bg-light p-30">
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label>Name</label>
+                      <input class="form-control" type="text" name="displayName" id="displayName" formControlName="displayName" [(ngModel)]="order.displayName" placeholder="Hung">
+                      <small id="displayNameHelp" class="form-text text-muted err" *ngIf="!infocheckout.get('displayName')?.valid && infocheckout.get('firstName')?.touched">
+                        <i class = "fa fa-times-circle" style="color: firebrick;"></i>
+                      Input FirstName Please</small>
+                      <i class = "fa fa-check-circle" style="color:green;" *ngIf="infocheckout.controls.displayName.valid"></i>
+                  </div>
+                  <div class="col-md-6 form-group">
+                      <label>E-mail</label>
+                      <input class="form-control" type="text" name="email" id="email" formControlName="email" [(ngModel)]="order.email" placeholder="example@email.com">
+                      <small id="emailHelp" class="form-text text-muted err" *ngIf="!infocheckout.get('email')?.valid && infocheckout.get('email')?.touched">
+                        <i class = "fa fa-times-circle" style="color: firebrick;"></i>
+                      Input Email Please</small>
+                      <i class = "fa fa-check-circle" style="color:green;" *ngIf="infocheckout.controls.email.valid"></i>
+                  </div>
+                  <div class="col-md-6 form-group">
+                      <label>Mobile No</label>
+                      <input class="form-control" type="text" name="phone" id="phone" formControlName="phone" [(ngModel)]="order.phone" placeholder="0123 456 789">
+                      <small id="phonelHelp" class="form-text text-muted err" *ngIf="!infocheckout.get('phone')?.valid && infocheckout.get('phone')?.touched">
+                        <i class = "fa fa-times-circle" style="color: firebrick;"></i>
+                      Input Phone Please</small>
+                      <i class = "fa fa-check-circle" style="color:green;" *ngIf="infocheckout.controls.phone.valid"></i>
+                  </div>
+                  <div class="col-md-6 form-group">
+                      <label>Address</label>
+                      <input class="form-control" type="text" name="address" id="address" formControlName="address" [(ngModel)]="order.address" placeholder="123 Street">
+                      <small id="addressHelp" class="form-text text-muted err" *ngIf="!infocheckout.get('address')?.valid && infocheckout.get('address')?.touched">
+                        <i class = "fa fa-times-circle" style="color: firebrick;"></i>
+                      Input Address Please</small>
+                      <i class = "fa fa-check-circle" style="color:green;" *ngIf="infocheckout.controls.address.valid"></i>
+                  </div>
                   </div>
               </div>
+            </form>
           </div>
       </div>
       <div class="col-lg-4">
