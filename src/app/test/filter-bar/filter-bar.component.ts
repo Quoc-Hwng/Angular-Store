@@ -108,6 +108,7 @@ export class FilterBarComponent implements OnInit {
                                   price1:this.price1,price2:this.price2,
                                   size: this.size,brand: this.brand, sort: this.sort}).then((data:any)=>{
         this.products =data.data.data as Product[];
+        this.page = 1;
         this.totalLength = data.data.data.length;
         if(this.totalLength === 0)
         {

@@ -62,7 +62,7 @@
                       <div class="d-flex justify-content-between mt-2" >
                           <h5>Total</h5>
                         <!-- <div [(ngModel)]="grandTotal" name="grandTotal" ngDefaultControl><h5>{{grandTotal}}</h5></div> -->
-                         <div><h5>{{grandTotal}}</h5></div>
+                         <div><h5>{{grandTotal | number: '2.'}}</h5></div>
                       </div>
                       <button class="btn btn-block btn-primary font-weight-bold my-3 py-3" routerLink = "/checkout">Proceed To Checkout</button>
                   </div>

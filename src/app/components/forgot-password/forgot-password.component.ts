@@ -52,7 +52,8 @@ export class ForgotPasswordComponent implements OnInit {
         err => {
 
           if (err.error.message) {
-            this.errorMessage = err.error.message;
+            this.errorMessage = "Email incorrect";
+            this.ngOnInit();
           }
         }
       );

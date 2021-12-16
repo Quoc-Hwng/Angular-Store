@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { DataService } from 'src/app/service/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RestApiService } from 'src/app/service/rest-api.service';
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
@@ -19,7 +21,7 @@ export class ResetPasswordComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private rest: RestApiService,
     private dataService: DataService,
-    private router: Router, private route: ActivatedRoute) {
+    private router: Router, private route: ActivatedRoute,private toastr: ToastrService) {
       this.token = route.snapshot.params['token'];
     }
 
@@ -36,10 +38,12 @@ export class ResetPasswordComponent implements OnInit {
     this.rest.patchToken(this.url,this.token,this.resetPasswordForm.value).then(data => {
         this.resetPasswordForm.reset();
         this.successMessage = "Reset password sucessfully.";
+        this.toastr.success('Success', this.successMessage);
         setTimeout(() => {
           this.successMessage = '';
           this.router.navigate(['/login']);
           localStorage.removeItem('tokens');
+          localStorage.removeItem('user')
         }, 3000);
       },
       err => {
@@ -52,6 +56,7 @@ export class ResetPasswordComponent implements OnInit {
     );
   }}else{
     this.errorMessage = 'Mật khẩu không khớp';
+    this.toastr.error(this.errorMessage);
   }
 }
 

@@ -60,7 +60,7 @@
               </tr>
             </tbody>
           </table>
-          <h2>Tiền cần thanh toán: {{order.total}}</h2>
+          <h2>Tiền cần thanh toán: {{order.total | number: '2.'}}</h2>
         </div>
         <div *ngIf="order?.state === 'unconfirmed'">
         <button class="btn btn-primary pull-right" (click)="update()">Hủy đơn hàng</button>

@@ -14,6 +14,7 @@ export class SearchProductComponent implements OnInit {
   public productList : any ;
   public filterCategory : any
   searchKey:string ="";
+  errorMessage: string = "";
   constructor(private productService: ProductService,private cartService: CartService) { }
 
   ngOnInit() {
@@ -26,6 +27,10 @@ export class SearchProductComponent implements OnInit {
       this.searchKey = val;
       console.log(this.searchKey);
     })
+    if(this.searchKey === '' || this.productList?.length === 0)
+    {
+      this.errorMessage = 'No products found';
+    }else {this.errorMessage = ''}
 
   }
 }

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Employee } from 'src/app/models/employee';
 import { DataService } from 'src/app/service/data.service';
 import { RestApiService } from 'src/app/service/rest-api.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
   url='http://localhost:3000/api/v1/auth/user/login'
   constructor(private rest:RestApiService,
     private dataSer: DataService,
-    private router: Router) {
+    private router: Router,
+    private toastr: ToastrService) {
       this.employee= new Employee;
      // this.role = data.employee!.role;
      }
@@ -35,13 +37,12 @@ export class LoginComponent implements OnInit {
       this.rest.post(this.url,this.employee).then(async(data:any)=>{
         let value = (data as { user: string,token:string})
         console.log(data.data.user.role);
-       var token = value.user;
         this.successMessage = "Success";
         localStorage.setItem('tokens',value.token);
         const jsonData = JSON.stringify(data.data.user)
         localStorage.setItem('user',jsonData);
-        var item = localStorage.getItem('tokens');
         await this.dataSer.getProfile();
+        this.toastr.success('Login success');
         if(data.data.user.role === 'admin')
         { this.router.navigate(['/admin/home-admin'])
           return;}
@@ -51,7 +52,8 @@ export class LoginComponent implements OnInit {
       })
       .catch(error=>{
         this.dataSer.error('Incorrect email or password');
-        this.errorMessage = error.message
+        this.errorMessage = 'Incorrect email or password'
+        this.toastr.error('Incorrect email or password');
         this.btnDisabled=false;
       })
     }

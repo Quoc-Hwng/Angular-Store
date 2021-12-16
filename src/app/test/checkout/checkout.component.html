@@ -95,12 +95,12 @@
                           <label>Town</label>
                           <input class="form-control" type="text" placeholder="Linh Chieu">
                       </div> -->
-                      <div class="col-md-12 form-group">
+                      <!-- <div class="col-md-12 form-group">
                           <div class="custom-control custom-checkbox">
                               <input type="checkbox" class="custom-control-input" id="newaccount">
                               <label class="custom-control-label" for="newaccount">Create an account</label>
                           </div>
-                      </div>
+                      </div> -->
                       <!-- <div class="col-md-12" *ngIf="dataUser !== null">
                           <div class="custom-control custom-checkbox">
                               <input type="checkbox" class="custom-control-input" id="shipto">
@@ -166,7 +166,7 @@
                   <h6 class="mb-3">Products</h6>
                   <div class="d-flex justify-content-between" *ngFor = "let item of items">
                       <p>{{item.product.productName}}</p>
-                      <p>{{item.total}}</p>
+                      <p>{{item.total | number: '2.'}}</p>
                   </div>
               </div>
               <!-- <div class="border-bottom pt-3 pb-2">
@@ -182,7 +182,7 @@
               <div class="pt-2">
                   <div class="d-flex justify-content-between mt-2">
                       <h5>Total</h5>
-                      <h5>{{grandTotal}}</h5>
+                      <h5>{{grandTotal | number : '2.'}}</h5>
                   </div>
               </div>
               <div>
