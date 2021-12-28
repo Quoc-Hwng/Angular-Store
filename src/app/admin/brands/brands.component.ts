@@ -13,7 +13,7 @@ export class BrandsComponent implements OnInit {
 
   brands!: Brand[];
   btnDisabled= false;
-  url='http://localhost:3000/api/v1/admin/brand'
+  url='https://desolate-dusk-27866.herokuapp.com/api/v1/admin/brand'
 
   deleteId!:string;
   confirmMessage='';

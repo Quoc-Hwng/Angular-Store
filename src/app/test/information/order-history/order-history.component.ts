@@ -13,7 +13,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class OrderHistoryComponent implements OnInit {
 
-  url='http://localhost:3000/api/v1/cart?sort=-timeOrder';
+  url='https://desolate-dusk-27866.herokuapp.com/api/v1/cart?sort=-timeOrder';
   order!: Order[];
   orders!: Order[];
   totalLength: number;

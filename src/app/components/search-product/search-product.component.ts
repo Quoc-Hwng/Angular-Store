@@ -10,7 +10,7 @@ import { ProductService } from 'src/app/service/product.service';
 })
 export class SearchProductComponent implements OnInit {
 
-  url='http://localhost:3000/api/v1/user/product';
+  url='https://desolate-dusk-27866.herokuapp.com/api/v1/user/product';
   public productList : any ;
   public filterCategory : any
   searchKey:string ="";

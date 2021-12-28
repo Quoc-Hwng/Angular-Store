@@ -15,7 +15,7 @@ export class OrderTrackingComponent implements OnInit {
   order: Order;
   Id = '';
   messageError = '';
-  url1='http://localhost:3000/api/v1/cart';
+  url1='https://desolate-dusk-27866.herokuapp.com/api/v1/cart';
   constructor(
     private rest : RestApiService,
     private productService: ProductService,

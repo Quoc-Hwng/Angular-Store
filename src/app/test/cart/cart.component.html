@@ -32,7 +32,7 @@
               <tbody class="align-middle">
                   <tr *ngFor="let item of items">
                       <td class="align-middle"><img src="{{item.product.productImg1}}" alt="" style="width: 50px;"> {{item.product.productName}}</td>
-                      <td class="align-middle">{{item.product.price| number: '2.'}}</td>
+                      <td class="align-middle">{{item.product.priceSale| number: '2.'}}</td>
                       <td class="align-middle">
                           <div class="input-group quantity mx-auto" style="width: 100px;">
                               <div class="input-group-btn">

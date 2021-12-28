@@ -10,7 +10,7 @@ import { RestApiService } from 'src/app/service/rest-api.service';
 })
 export class ForgotPasswordComponent implements OnInit {
 
-  url='http://localhost:3000/api/v1/auth/forgotPassword';
+  url='https://desolate-dusk-27866.herokuapp.com/api/v1/auth/forgotPassword';
   RequestResetForm: FormGroup;
   forbiddenEmails: any;
   errorMessage: string;

@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   btnDisabled= false;
   errorMessage: string;
   successMessage: string;
-  url='http://localhost:3000/api/v1/auth/user/login'
+  url='https://desolate-dusk-27866.herokuapp.com/api/v1/auth/user/login'
   constructor(private rest:RestApiService,
     private dataSer: DataService,
     private router: Router,

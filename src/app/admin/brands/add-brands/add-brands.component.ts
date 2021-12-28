@@ -15,7 +15,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 export class AddBrandsComponent implements OnInit {
   saving=false;
   brand: Brand;
-  url1='http://localhost:3000/api/v1/admin/brand/add'
+  url1='https://desolate-dusk-27866.herokuapp.com/api/v1/admin/brand/add'
   constructor(private modelService: NgbModal,
     private rest:RestApiService,
     private data: DataService,

@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
   totalItem: number = 0;
   brands!: Brand[];
   public brand : string = '';
-  url='http://localhost:3000/api/v1/admin/brand'
+  url='https://desolate-dusk-27866.herokuapp.com/api/v1/admin/brand'
 
   constructor(private route: ActivatedRoute,
     private _router: Router,

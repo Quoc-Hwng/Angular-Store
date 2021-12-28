@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit {
   page = 1;
   pages = 1;
   key = '';
-  url = 'http://localhost:3000/api/v1/users'
+  url = 'https://desolate-dusk-27866.herokuapp.com/api/v1/users'
   constructor(private rest: RestApiService,private data: DataService) { }
   search(keys: string) {
     if (keys !== '') {

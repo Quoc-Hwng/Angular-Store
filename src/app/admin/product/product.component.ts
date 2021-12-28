@@ -15,8 +15,8 @@ import { ProductService } from 'src/app/service/product.service';
 export class ProductComponent implements OnInit {
   product!: Product[];
   btnDisabled= false;
-  url='http://localhost:3000/api/v1/admin/product'
-  url1 = 'http://localhost:3000/api/products'
+  url='https://desolate-dusk-27866.herokuapp.com/api/v1/admin/product'
+  url1 = 'https://desolate-dusk-27866.herokuapp.com/api/products'
   deleteId!:string;
   confirmMessage='';
   key='';

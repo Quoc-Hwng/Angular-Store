@@ -16,7 +16,7 @@ export class UpdateInforComponent implements OnInit {
   editId!: string;
   doing=false;
   @Output()
-  url = 'http://localhost:3000/api/v1/auth';
+  url = 'https://desolate-dusk-27866.herokuapp.com/api/v1/auth';
   btnDisabled= false;
   employee: Employee;
   updateFinished: EventEmitter<string> = new EventEmitter<string>();

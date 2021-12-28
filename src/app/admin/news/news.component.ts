@@ -12,7 +12,7 @@ import { News } from '../models/news';
 export class NewsComponent implements OnInit {
   news!: News[];
   btnDisabled= false;
-  url='http://localhost:3000/api/v1/admin/new'
+  url='https://desolate-dusk-27866.herokuapp.com/api/v1/admin/new'
   deleteId!:string;
   confirmMessage='';
   key='';

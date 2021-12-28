@@ -26,8 +26,8 @@ export class HomeAdminComponent implements OnInit {
   order3!: Order[];
   btnDisabled = false;
   Prod: any;
-  url = 'http://localhost:3000/api/v1/cart?sort=-timeOrder'
-  url2='http://localhost:3000/api/v1/user/product'
+  url = 'https://desolate-dusk-27866.herokuapp.com/api/v1/cart?sort=-timeOrder'
+  url2='https://desolate-dusk-27866.herokuapp.com/api/v1/user/product'
   deleteId!: string;
   confirmMessage = '';
   key = '';

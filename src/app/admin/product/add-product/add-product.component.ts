@@ -22,11 +22,11 @@ export class AddProductComponent implements OnInit {
   saving=false;
   product: Product;
   img1: string;
-  url1='http://localhost:3000/api/v1/admin/product/add'
+  url1='https://desolate-dusk-27866.herokuapp.com/api/v1/admin/product/add'
 
   brands!: Brand[];
   btnDisabled= false;
-  url='http://localhost:3000/api/v1/admin/brand'
+  url='https://desolate-dusk-27866.herokuapp.com/api/v1/admin/brand'
 
   constructor(private modelService: NgbModal,
     private rest:RestApiService,

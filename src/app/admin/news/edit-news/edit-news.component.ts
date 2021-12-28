@@ -17,7 +17,7 @@ export class EditNewsComponent implements OnInit {
 
   doing=false;
   news: News;
-  url1='http://localhost:3000/api/v1/admin/new/edit'
+  url1='https://desolate-dusk-27866.herokuapp.com/api/v1/admin/new/edit'
   @Input("id")
   editId!: string;
 

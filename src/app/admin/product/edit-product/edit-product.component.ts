@@ -16,11 +16,11 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 export class EditProductComponent implements OnInit {
   doing=false;
   product: Product;
-  url1='http://localhost:3000/api/v1/admin/product/edit'
+  url1='https://desolate-dusk-27866.herokuapp.com/api/v1/admin/product/edit'
 
   brand!: Brand[];
   btnDisabled= false;
-  url='http://localhost:3000/api/v1/admin/brand'
+  url='https://desolate-dusk-27866.herokuapp.com/api/v1/admin/brand'
 
   @Input("id")
   editId!: string;

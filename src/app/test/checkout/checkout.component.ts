@@ -7,6 +7,7 @@ import { FormBuilder, Validators  } from '@angular/forms';
 import {Employee} from 'src/app/models/employee';
 import { CartItem } from 'src/app/common/cart';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-checkout',
@@ -21,13 +22,15 @@ export class CheckoutComponent implements OnInit {
   checkout = false;
   dataUser : Employee;
   isUser = false;
-  url = 'http://localhost:3000/api/v1/cart/add';
+  url = 'https://desolate-dusk-27866.herokuapp.com/api/v1/cart/add';
+  url1 = 'https://desolate-dusk-27866.herokuapp.com/api/v1/cart/addPayPal'
 
   constructor(private cartService: CartService,
     public data: DataService,
     private rest: RestApiService,
     private fb: FormBuilder,
-    private router: Router) {
+    private router: Router,
+    private toastr: ToastrService) {
       this.order = new Order;
     }
 
@@ -85,5 +88,28 @@ export class CheckoutComponent implements OnInit {
       });
 
   }
+  payPal(){
+    //	setLoading(true);
+    this.checkout=true;
+    this.order.user = this.data.employee?.id!
+    this.order.products = this.items.map((item:CartItem) =>{
+      return {
+        product: item.product.id,
+        quantity: item.quantity,
+      }
+    });
+    this.order.total = this.grandTotal;
+        this.rest.post(this.url1,this.order).then((res:any) => {
+          console.log(res);
+        	window.location = res.forwardLink;
+
+        //	setLoading(false);
+        })
+        .catch((err) => {
+          console.log("faild", err);
+          this.toastr.error("faild");
+    //			setLoading();
+        });
+    }
 
 }

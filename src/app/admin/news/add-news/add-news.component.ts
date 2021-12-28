@@ -13,7 +13,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class AddNewsComponent implements OnInit {
   saving=false;
   news: News;
-  url1='http://localhost:3000/api/v1/admin/new/add'
+  url1='https://desolate-dusk-27866.herokuapp.com/api/v1/admin/new/add'
   constructor(private modelService: NgbModal,
     private rest:RestApiService,
     private data: DataService,

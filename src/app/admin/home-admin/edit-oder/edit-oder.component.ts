@@ -20,7 +20,7 @@ export class EditOderComponent implements OnInit {
 
   doing=false;
   oder: Order;
-  url1='http://localhost:3000/api/v1/cart';
+  url1='https://desolate-dusk-27866.herokuapp.com/api/v1/cart';
   @Input("id")
   editId!: string;
 

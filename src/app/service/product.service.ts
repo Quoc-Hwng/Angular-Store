@@ -5,9 +5,9 @@ import {map} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ProductService {
-  url = 'http://localhost:3000/api/v1/user/product';
-  url1= 'http://localhost:3000/api/v1/auth';
-  url2='http://localhost:3000/api/v1/user/product/edit';
+  url = 'https://desolate-dusk-27866.herokuapp.com/api/v1/user/product';
+  url1= 'https://desolate-dusk-27866.herokuapp.com/api/v1/auth';
+  url2='https://desolate-dusk-27866.herokuapp.com/api/v1/user/product/edit';
 
 constructor(private httpClient: HttpClient) {
 

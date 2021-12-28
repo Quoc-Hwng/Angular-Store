@@ -29,7 +29,7 @@ export class FilterBarComponent implements OnInit {
   rangeValues: number[] = [100000,40000000];
   message ='';
 
-  url='http://localhost:3000/api/v1/user/product';
+  url='https://desolate-dusk-27866.herokuapp.com/api/v1/user/product';
 
   public totalItems: number = 0;
   constructor(

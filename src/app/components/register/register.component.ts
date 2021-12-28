@@ -13,7 +13,7 @@ export class RegisterComponent implements OnInit {
 
   employee: Employee;
   saving= false;
-  url='http://localhost:3000/api/v1/auth/register'
+  url='https://desolate-dusk-27866.herokuapp.com/api/v1/auth/register'
   constructor(private rest:RestApiService,
     private data: DataService,
     private router: Router) {

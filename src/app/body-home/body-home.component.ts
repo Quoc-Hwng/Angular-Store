@@ -17,8 +17,8 @@ export class BodyHomeComponent implements OnInit {
   btnDisabled= false;
   brand: Brand[];
 
-  url='http://localhost:3000/api/v1/user/product';
-  url1='http://localhost:3000/api/v1/admin/brand';
+  url='https://desolate-dusk-27866.herokuapp.com/api/v1/user/product';
+  url1='https://desolate-dusk-27866.herokuapp.com/api/v1/admin/brand';
   constructor(private rest:RestApiService,
     private data: DataService) { }
 

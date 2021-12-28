@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ResetPasswordComponent implements OnInit {
 
-  url='http://localhost:3000/api/v1/auth/user/resetPassword';
+  url='https://desolate-dusk-27866.herokuapp.com/api/v1/auth/user/resetPassword';
   resetPasswordForm: FormGroup;
   password: FormControl;
   successMessage: string;

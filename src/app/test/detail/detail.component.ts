@@ -21,7 +21,7 @@ export class DetailComponent implements OnInit {
   key='';
   id: any;
   quantity: number;
-  url='http://localhost:3000/api/v1/user/product'
+  url='https://desolate-dusk-27866.herokuapp.com/api/v1/user/product'
 
   public totalItems: number = 0;
   constructor(
