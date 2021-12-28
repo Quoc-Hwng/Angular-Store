@@ -1,15 +1,24 @@
-//Install express server
 const express = require('express');
 const path = require('path');
-
+const favicon = require('serve-favicon');
 const app = express();
 
-// Serve only the static files form the dist directory
+const forceSSL = function () {
+  return function (req, res, next) {
+    if (req.headers['x-forwarded-proto'] !== 'https') {
+      return res.redirect(
+        ['https://', req.get('Host'), req.url].join('')
+      );
+    }
+    next();
+  }
+};
 app.use(express.static('./dist/mern-course'));
 
-app.get('/*', (req, res) =>
-    res.sendFile('index.html', {root: 'dist/mern-course/'}),
-);
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname,'/dist/mern-course/index.html'));
+});
 
-// Start the app by listening on the default Heroku port
+app.use(forceSSL());
+
 app.listen(process.env.PORT || 8080);
