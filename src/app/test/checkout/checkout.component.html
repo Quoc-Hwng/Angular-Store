@@ -185,9 +185,10 @@
                       <h5>{{grandTotal | number : '2.'}}</h5>
                   </div>
               </div>
-              <div>
-              <button class="btn btn-block btn-primary font-weight-bold py-3"(click)="checkOut()">Place Order</button>
-              <button class="btn btn-block btn-primary font-weight-bold py-3"(click)="payPal()">PayPal</button>
+              <div *ngIf="items.length !== 0">
+              <button class="btn btn-block btn-primary font-weight-bold py-3" [disabled]="! infocheckout.valid" (click)="checkOut()">Place Order</button>
+              <button class="btn btn-block btn-primary font-weight-bold my-3 py-3" [disabled]="! infocheckout.valid" (click)="payPal()">PayPal</button>
+              <ngx-paypal [config]="payPalConfig"></ngx-paypal>
               </div>
           </div>
       </div>

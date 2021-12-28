@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { CartItem } from 'src/app/common/cart';
 import { CartService } from 'src/app/service/cart.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-cart',
@@ -8,22 +9,31 @@ import { CartService } from 'src/app/service/cart.service';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-
   public items :  CartItem[] = [];
   public grandTotal !: number;
-  totalPrice : number;
-
-  constructor(private cartService: CartService) { }
-
+  addCart = false;
+  lengthCart: number = 0;
+  confirmMessage = ''
+  deleteProduct: any;
+  constructor(private cartService: CartService,
+    private modalService: NgbModal,) {
+    }
   removeItem(item: CartItem){
     this.cartService.removeCartItem(item);
+    this.modalService.dismissAll();
   }
-
   ngOnInit() {
     this.cartService.getProducts()
     .subscribe(res=>{
       this.items = res;
+      if(this.items !== null){
+      this.lengthCart = this.items.length;}
+      if(this.items === null)
+      {
+        this.lengthCart = 0;
+      }
       this.grandTotal = this.cartService.getTotalPrice();
+      console.log(this.items);
     })
   }
   addQuantity(item: CartItem){
@@ -33,6 +43,7 @@ export class CartComponent implements OnInit {
     }
     item.quantity+=1;
    this.cartService.addtoCart(item.product,item.quantity);
+
    this.ngOnInit();
   }
   subQuantity(item: CartItem){
@@ -53,10 +64,16 @@ export class CartComponent implements OnInit {
       return;
     }
     this.cartService.addtoCart(item.product,item.quantity);
+    console.log()
     this.ngOnInit();
   }
   clearCart(){
     this.cartService.removeAllCart();
+  }
+  confirmDeleteProduct(content:  TemplateRef<any>,item:any){
+    this.modalService.open(content,{ariaDescribedBy: 'modal-basic-title'});
+    this.deleteProduct = item;
+    this.confirmMessage = `Remove product from carts` ;
   }
 
 }

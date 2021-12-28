@@ -11,7 +11,6 @@ import { ProductDisplayComponent } from './components/product-display/product-di
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {CarouselModule} from 'primeng/carousel';
 import {ButtonModule} from 'primeng/button';
-import {ToastModule} from 'primeng/toast';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LoginComponent} from './components/login/login.component';
 import {DialogModule} from 'primeng/dialog';
@@ -52,7 +51,9 @@ import { UpdateInforComponent } from './test/information/profile/update-infor/up
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from '../environments/environment';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-
+import { ModalDetailComponent } from './test/detail/modal-detail/modal-detail.component';
+import { NgxPayPalModule } from 'ngx-paypal';
+import { DetailOrderComponent } from './test/information/order-history/detail-order/detail-order.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,9 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     ForgotPasswordComponent,
     ResetPasswordComponent,
     OrderTrackingComponent,
-    UpdateInforComponent
+    UpdateInforComponent,
+    ModalDetailComponent,
+    DetailOrderComponent,
   ],
   imports: [
     BrowserModule,
@@ -104,6 +107,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     MatListModule,
     BrowserAnimationsModule,
     AngularFireStorageModule,
+    NgxPayPalModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     ToastrModule.forRoot({
     }),

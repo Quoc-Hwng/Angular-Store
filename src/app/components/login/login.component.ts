@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
     this.btnDisabled=true;
     if(this.validate()){
       this.rest.post(this.url,this.employee).then(async(data:any)=>{
-        let value = (data as { user: string,token:string})
+        let value = (data as {user: string,token:string})
         console.log(data.data.user.role);
         this.successMessage = "Success";
         localStorage.setItem('tokens',value.token);

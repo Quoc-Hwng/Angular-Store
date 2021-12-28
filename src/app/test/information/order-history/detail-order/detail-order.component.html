@@ -1,0 +1,59 @@
+<div *ngIf = "order">
+  <ng-template #content let-c="close" let-d="dismiss" class="modal">
+    <div class="modal-header" style="width: 1000px; background-color: rgb(131, 193, 247);">
+      <h4 class="modal-title">Thông tin giỏ hàng</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  <div class="modal-body"  style="width: 1000px; background-color: white;">
+  <div> Trạng thái:
+    <div *ngIf="order?.state === 'unconfirmed'"> Chưa xác nhận </div>
+    <div *ngIf="order?.state === 'confirmed'"> Xác nhận </div>
+    <div *ngIf="order?.state === 'No'"> Đã hủy </div>
+  </div>
+  <div class="card-body align-middle">
+    <div class="row align-middle">
+      <div class="col">
+        <div class = "row"><div class="title-infor">Thông tin đơn hàng : </div> {{order.id}}</div>
+        <div class = "row"><div class="title-infor">Ngày đặt hàng : </div> {{order.timeOrder}}</div>
+        <div class = "row"><div class="title-infor">Phương thức thanh toán : </div>{{order.stateOrder}}</div>
+        <div class = "row"><div class="title-infor">Thời gian giao hàng dự kiến : </div> Sau 1 - 5 ngày làm việc tùy vào địa chỉ giao hàng.</div>
+      </div>
+      <div class="col">
+        <div class = "row"><div class="title-infor">Họ tên : </div> {{order.displayName}}</div>
+        <div class = "row"><div class="title-infor">Số điện thoại nhận hàng : </div> {{order.phone}}</div>
+        <div class = "row"><div class="title-infor">Địa chỉ: </div> {{order.address}}</div>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table">
+        <thead class="text-primary">
+          <th>Tên sản phẩm</th>
+          <th>Giá</th>
+          <th>SL</th>
+          <th>Tạm tính</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pro of order.products">
+            <td class="align-middle"><img src="{{pro.image}}" alt="" style="width: 50px;">{{pro.name}}</td>
+            <td class="text-primary align-middle">{{pro.price | currency : ' VND'}}</td>
+            <td class="text-primary align-middle">{{pro.quantity}}</td>
+            <td class="text-primary align-middle">{{pro.totalP | currency : ' VND'}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <h2>Tiền cần thanh toán: {{order.total | number: '2.'}}</h2>
+    </div>
+    <div *ngIf="order?.state === 'unconfirmed'">
+      <button class="btn btn-primary pull-right" (click)="update()">Hủy đơn hàng</button>
+    </div>
+  </div>
+</div>
+  <div class="modal-footer" style="width: 1000px; background-color: aliceblue;" >
+    <button type="button" class="btn btn-secondary pri" (click)="c('Close click')">Close</button>
+  </div>
+</ng-template>
+<button rel="tooltip" title="detail user" class="btn btn-sm btn-outline-primary " (click)="open(content)">
+  <i class="fas fa-edit"></i></button>
+</div>

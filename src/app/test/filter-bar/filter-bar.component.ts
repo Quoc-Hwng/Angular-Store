@@ -12,22 +12,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class FilterBarComponent implements OnInit {
 
- totalLength: number;
- page:number = 1;
-  gender: any;
-  status: any;
-  selling: any;
-  product!: Product;
-  products!: Product[];
-  price1: number;
-  price2: number;
-  color: string;
-  size: number;
-  brand: string;
-  sort: string;
-  isColorChecked = false;
-  rangeValues: number[] = [100000,40000000];
-  message ='';
+  totalLength: number;
+  page:number = 1;
+   gender: any;
+   status: any;
+   selling: any;
+   product!: Product;
+   products!: Product[];
+   price1: number;
+   price2: number;
+   color: string;
+   size: number;
+   brand: string;
+   sort: string;
+   loading: boolean = true;
+   rangeValues: number[] = [100000,40000000];
+   message ='';
 
   url='https://desolate-dusk-27866.herokuapp.com/api/v1/user/product';
 
@@ -38,7 +38,13 @@ export class FilterBarComponent implements OnInit {
     private route: ActivatedRoute,
     private _router: Router){
     }
+    scrollTop(){
+      this.loading = false;
+      document.documentElement.scrollTop = 0;
+    }
     navigateToPrice(){
+      this.loading = true;
+      document.documentElement.scrollTop = 0
       this._router.navigate([], {
        relativeTo: this.route,
        queryParams: {
@@ -51,23 +57,21 @@ export class FilterBarComponent implements OnInit {
      });
     }
     navigateToFoo(color:string){
-     // element.checked = true;
-      // if(this.isColorChecked){
-      //   color = '';}
+      this.loading = true;
+      document.documentElement.scrollTop = 0
       this._router.navigate([], {
        relativeTo: this.route,
        queryParams: {
          status : this.status,
          color : color,
-      //   price1: color,
-
        },
        queryParamsHandling: 'merge',
        skipLocationChange: false
      });
-   //  this.isColorChecked = !this.isColorChecked;
     }
     navigateToSize(size: string){
+      this.loading = true;
+      document.documentElement.scrollTop = 0
       this._router.navigate([], {
        relativeTo: this.route,
        queryParams: {
@@ -79,11 +83,12 @@ export class FilterBarComponent implements OnInit {
      });
     }
     navigateToSort(sort: string){
+      this.loading = true;
+      document.documentElement.scrollTop = 0
       this._router.navigate([], {
        relativeTo: this.route,
        queryParams: {
          sort: sort,
-
        },
        queryParamsHandling: 'merge',
        skipLocationChange: false
@@ -91,8 +96,7 @@ export class FilterBarComponent implements OnInit {
     }
   ngOnInit(){
     this.route.queryParams
-    .subscribe(params => {
-      console.log(params); // { orderby: "price" }
+    .subscribe(params => { // { orderby: "price" }
       this.status = params.status;
       this.gender = params.gender;
       this.selling = params.selling;
@@ -102,17 +106,19 @@ export class FilterBarComponent implements OnInit {
       this.size = params.size;
       this.brand = params.brand;
       this.sort = params.sort;
-      console.log(this.status);
+      if(this.status || this.gender || this.selling || this.brand){this.loading = true;}
+      if(!this.status && !this.gender && !this.selling && !this.brand){this.loading = true;}
       this.rest.filter(this.url,{status:this.status,gender:this.gender,
                                   color:this.color,selling:this.selling,
                                   price1:this.price1,price2:this.price2,
                                   size: this.size,brand: this.brand, sort: this.sort}).then((data:any)=>{
+        this.loading = false;
         this.products =data.data.data as Product[];
         this.page = 1;
         this.totalLength = data.data.data.length;
         if(this.totalLength === 0)
         {
-          this.message = "Không tìm thấy sản phẩm nào!"
+          this.message = "No products found!"
         }
       }) // price
     }

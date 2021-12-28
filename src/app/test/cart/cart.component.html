@@ -6,7 +6,7 @@
       <div class="col-12">
           <nav class="breadcrumb bg-light mb-30">
               <a class="breadcrumb-item text-dark" href="#">Home</a>
-              <a class="breadcrumb-item text-dark" routerLink="/home">Shop</a>
+              <a class="breadcrumb-item text-dark" href="#">Shop</a>
               <span class="breadcrumb-item active">Shopping Cart</span>
           </nav>
       </div>
@@ -14,7 +14,7 @@
 </div>
 <!-- Breadcrumb End -->
 
-<div *ngIf="items !== null && items.length !== 0">
+<div *ngIf="items !== null && lengthCart !== 0">
 <!-- Cart Start -->
 <div class="container-fluid">
   <div class="row px-xl-5">
@@ -31,16 +31,21 @@
               </thead>
               <tbody class="align-middle">
                   <tr *ngFor="let item of items">
-                      <td class="align-middle"><img src="{{item.product.productImg1}}" alt="" style="width: 50px;"> {{item.product.productName}}</td>
-                      <td class="align-middle">{{item.product.priceSale| number: '2.'}}</td>
+                      <td style="text-align: left;margin-left: 10px;"><img src="{{item.product.productImg1}}" alt="" style="width: 50px;"> {{item.product.productName}}</td>
+                      <td class="align-middle">{{item.product.priceSale | number: '2.'}}</td>
                       <td class="align-middle">
                           <div class="input-group quantity mx-auto" style="width: 100px;">
-                              <div class="input-group-btn">
+                              <div class="input-group-btn" *ngIf="item.quantity!==1">
                                   <button class="btn btn-sm btn-primary btn-minus" (click)="subQuantity(item)">
                                   <i class="fa fa-minus"></i>
                                   </button>
                               </div>
-                              <input type="number" class="form-control form-control-sm bg-secondary border-0 text-center"  [(ngModel)]="item.quantity" name="quantity" ngDefaultControl (input) = "changeQuantity(item)">
+                              <div class="input-group-btn" *ngIf="item.quantity===1">
+                                <button class="btn btn-sm btn-primary btn-minus" (click)="confirmDeleteProduct(content,item)">
+                                <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                              <input type="number" class="form-control form-control-sm bg-secondary border-0 text-center" [(ngModel)]="item.quantity" name="quantity" ngDefaultControl (input) = "changeQuantity(item)">
                               <div class="input-group-btn">
                                   <button class="btn btn-sm btn-primary btn-plus" (click)="addQuantity(item)">
                                       <i class="fa fa-plus"></i>
@@ -48,23 +53,24 @@
                               </div>
                           </div>
                       </td>
-                      <td class="align-middle" [(ngModel)]="item.total" name="total" ngDefaultControl>{{item.total | number: '2.' }}</td>
-                      <td class="align-middle"><button class="btn btn-sm btn-danger" (click) = "removeItem(item)"><i class="fa fa-times"></i></button></td>
+                      <td class="align-middle" [(ngModel)]="item.total" name="total" ngDefaultControl>{{item.total | number: '2.'}}</td>
+                      <td class="align-middle"><button class="btn btn-sm btn-danger" (click)="confirmDeleteProduct(content,item)"><i class="fa fa-times"></i></button></td>
                   </tr>
                 </tbody>
               </table>
-              <button (click)="clearCart()">Clear</button>
+              <button class="btn btn-primary" routerLink="/homes">More Shopping</button>
           </div>
           <div class="col-lg-4">
               <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Cart Summary</span></h5>
               <div class="bg-light p-30 mb-5">
                   <div class="pt-2">
-                      <div class="d-flex justify-content-between mt-2" >
+                      <div class="d-flex justify-content-between mt-2">
                           <h5>Total</h5>
-                        <!-- <div [(ngModel)]="grandTotal" name="grandTotal" ngDefaultControl><h5>{{grandTotal}}</h5></div> -->
-                         <div><h5>{{grandTotal | number: '2.'}}</h5></div>
+                          <h5>{{grandTotal | number: '2.'}}</h5>
                       </div>
-                      <button class="btn btn-block btn-primary font-weight-bold my-3 py-3" routerLink = "/checkout">Proceed To Checkout</button>
+
+                      <button class="btn btn-block btn-primary font-weight-bold my-3 py-3" routerLink = "/checkout" >Proceed To Checkout</button>
+
                   </div>
               </div>
           </div>
@@ -72,15 +78,31 @@
   </div>
   <!-- Cart End -->
 </div>
-<ng-container *ngIf=" items.length === 0 && items.length !== null">
+<ng-container *ngIf=" lengthCart === 0 && items !== null">
   <div class="container">
     <div class = "center-cart-empty">
       <img src = "https://rukminim1.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90">
-      <h4>Không có sản phẩm nào</h4>
-      <h6>Thêm sản phẩm vào giỏ hàng</h6>
-      <button class="btn btn-primary" routerLink="/homes">Thêm sản phẩm</button>
+      <h4>No product</h4>
+      <h6>Add products to cart</h6>
+      <button class="btn btn-primary" routerLink="/homes">Shopping</button>
     </div>
   </div>
 
 </ng-container>
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Delete product in cart</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+  </div>
+  <div class="modal-body">
+    <p>{{confirmMessage}}</p>
+  </div>
+  <div class="modal-footer">
+    <button class=" btn btn-sm btn-ouline-danger" (click)="removeItem(deleteProduct)">Yes</button>
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">No</button>
+  </div>
+</ng-template>
   <app-footer></app-footer>

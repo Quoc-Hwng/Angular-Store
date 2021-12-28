@@ -15,7 +15,6 @@
                   <table class="table">
                     <thead class="text-primary">
                       <th>No</th>
-                      <th>Mã đơn hàng</th>
                       <th>Danh sách sản phẩm</th>
                       <th>Ngày đặt hàng</th>
                       <th>Tổng tiền</th>
@@ -24,15 +23,12 @@
                     <tbody>
                       <tr *ngFor="let item of order | paginate: { itemsPerPage: limit, currentPage: page, totalItems: totalLength }, let i = index " >
                         <td>{{i+1}}</td>
-                        <td>{{item.id}}</td>
                         <td><div *ngFor="let pro of item.products">{{pro.name}}, SL: {{pro.quantity}}</div></td>
                         <td>{{item.timeOrder | date: 'short'}}</td>
                         <td class="text-primary">{{item.total}}</td>
                         <td>{{item.state}}</td>
                         <td>
-                          <!-- <app-edit-oder [id]="item.id" (updateFinished)="finishAndAlert($event)">
-
-                          </app-edit-oder> -->
+                              <app-detail-order [Id]="item.id"></app-detail-order>
                         </td>
                       </tr>
                     </tbody>

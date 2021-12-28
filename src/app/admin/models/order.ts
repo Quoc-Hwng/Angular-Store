@@ -9,4 +9,5 @@ export class Order {
   products:any[] ;
   total: number;
   timeOrder: Date;
+  stateOrder!: string;
 }
