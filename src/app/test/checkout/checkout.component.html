@@ -26,13 +26,13 @@
                 </div>
                 <div class="row">
                   <div class="col-md-6">
-                    <label>Name</label>{{dataUser?.displayName}}</div>
+                    <label>Name :</label> {{dataUser?.displayName}}</div>
                   <div class="col-md-6">
-                    <label>Phone</label>{{dataUser?.phone}}</div>
+                    <label>Phone :</label> {{dataUser?.phone}}</div>
                   <div class="col-md-6">
-                    <label>Email</label>{{dataUser?.email}}</div>
+                    <label>Email :</label> {{dataUser?.email}}</div>
                   <div class="col-md-6">
-                    <label>Address</label>{{dataUser?.address}}</div>
+                    <label>Address :</label> {{dataUser?.address}}</div>
                 </div>
 
             </div>
@@ -186,8 +186,8 @@
                   </div>
               </div>
               <div *ngIf="items.length !== 0">
-              <button class="btn btn-block btn-primary font-weight-bold py-3" [disabled]="! infocheckout.valid" (click)="checkOut()">Place Order</button>
-              <button class="btn btn-block btn-primary font-weight-bold my-3 py-3" [disabled]="! infocheckout.valid" (click)="payPal()">PayPal</button>
+              <button class="btn btn-block btn-primary font-weight-bold py-3" (click)="checkOut()">Place Order</button>
+              <button class="btn btn-block btn-primary font-weight-bold my-3 py-3" (click)="payPal()">PayPal</button>
               <ngx-paypal [config]="payPalConfig"></ngx-paypal>
               </div>
           </div>
